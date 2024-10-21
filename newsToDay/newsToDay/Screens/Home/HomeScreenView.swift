@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct HomeScreenView: View {
+    @State private var searchText = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ScrollView() {
+                VStack(alignment: .leading) {
+                    Text("Discover things of this world")
+                        .foregroundStyle(.secondary)
+                        .padding(.bottom, 32)
+                    
+                    SearchView(searchText: $searchText)
+                }
+                .navigationTitle("Browse")
+                .padding([.horizontal, .bottom])
+            }
+        }
     }
 }
 
