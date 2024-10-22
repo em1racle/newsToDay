@@ -16,7 +16,7 @@ enum HTTPMethod: String {
 }
 
 // MARK: - Errors
-enum HTTPClientErrors: Error, LocalizedError {
+enum HTTPClientError: Error, LocalizedError {
     case badURL
     case badDataTask
     case badParametrSerialization
@@ -43,17 +43,17 @@ protocol HTTPClient {
     var apiKey: ApiKey { get }
     var baseURL: String { get }
     var path: String { get }
-    var endPoint: String { get }
+    var endpoint: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
     var data: Data? { get }
     
-    func request<T: Codable>(type: T.Type, completion: @escaping(Result<T, HTTPClientErrors>) -> Void)
+    func request<T: Codable>(type: T.Type, completion: @escaping(Result<T, HTTPClientError>) -> Void)
 }
 
 extension HTTPClient {
-    func request<T: Codable>(type: T.Type, completion: @escaping(Result<T, HTTPClientErrors>) -> Void) {
-        guard let url = URL(string: baseURL + path + endPoint) else {
+    func request<T: Codable>(type: T.Type, completion: @escaping(Result<T, HTTPClientError>) -> Void) {
+        guard let url = URL(string: baseURL + path + endpoint) else {
             completion(.failure(.badURL))
             return
         }
