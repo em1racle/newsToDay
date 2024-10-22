@@ -21,14 +21,26 @@ final class OnboardingViewModel: ObservableObject {
         "Get All the Updates in One Spot: Stay Ahead with Breaking News"
     ]
     
-    // Вычисление смещения для каждого квадрата
+    // Checking for last
+    var isLastPage: Bool {
+        currentIndex == squares.count - 1
+    }
+    
+    // transition func for next screen
+    func goToNextPage() {
+        if currentIndex < squares.count - 1 {
+            currentIndex += 1
+        }
+    }
+    
+    // counting offset for screens
     func getOffsetForSquare(at index: Int) -> CGFloat {
-        let visiblePart: CGFloat = 40 // Смещение для частично видимых квадратов
-        let baseOffset = CGFloat(index - currentIndex) * screenWidth * 0.8 // Смещение центрального квадрата
+        let visiblePart: CGFloat = 40 // Offset for other squares
+        let baseOffset = CGFloat(index - currentIndex) * screenWidth * 0.8 // Offset for central squares
         return baseOffset + (index != currentIndex ? (index > currentIndex ? visiblePart : -visiblePart) : 0)
     }
     
-    // Масштабирование активного квадрата
+    // Scaling the active square
     func getScaleAmount() -> CGFloat {
         let max = screenWidth / 2
         let currentAmount = abs(offset.width)
@@ -36,7 +48,7 @@ final class OnboardingViewModel: ObservableObject {
         return 1.0 - min(percentage, 0.5) * 0.5
     }
     
-    // Обработка окончания листания
+    // Handling the end of swiping
     func handleDragEnd(value: DragGesture.Value) {
         let dragThreshold: CGFloat = 50
         
@@ -45,7 +57,7 @@ final class OnboardingViewModel: ObservableObject {
         } else if value.translation.width < -dragThreshold && currentIndex < squares.count - 1 {
             currentIndex += 1
         }
-        // Вернуть offset в 0 после окончания анимации
+        // return offset 0 after finishing animation
         offset = .zero
         
     }

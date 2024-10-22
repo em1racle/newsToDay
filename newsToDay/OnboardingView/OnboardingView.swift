@@ -34,7 +34,7 @@ struct OnboardingView: View {
                 }
         )
         
-        // Полупрозрачные точки внизу
+        // Dots
         HStack(spacing: 10) {
             ForEach(0..<vm.squares.count, id: \.self) { index in
                 Rectangle()
@@ -47,7 +47,7 @@ struct OnboardingView: View {
         }
         .padding(.top, 20)
         
-        // Текст, который листается синхронно с квадратами
+        // Text
         Text(vm.titles[vm.currentIndex])
             .font(.title)
             .animation(.spring(), value: vm.currentIndex)
@@ -57,13 +57,15 @@ struct OnboardingView: View {
             .animation(.spring(), value: vm.currentIndex)
             .padding(35)
         
-        BlueButtonView(buttonTitle: "Next") {
-            //
-        }
-        .padding(.horizontal, 40)
+        BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
+                    if vm.isLastPage {
+                        // transition action
+                    } else {
+                        vm.goToNextPage()
+                    }
+                }
+                .padding(.horizontal, 40)
     }
-    
-    
 }
 
 #Preview {
