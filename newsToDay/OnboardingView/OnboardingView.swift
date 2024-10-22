@@ -56,7 +56,13 @@ struct OnboardingView: View {
         Text(vm.descriptionTitles[vm.currentIndex])
             .animation(.spring(), value: vm.currentIndex)
             .padding(35)
+        
+        BlueButtonView(buttonTitle: "Next") {
+            //
+        }
+        .padding(.horizontal, 40)
     }
+    
     
 }
 
