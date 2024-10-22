@@ -28,7 +28,6 @@ struct CategoriesView: View {
                     }
                 }
             }
-            .padding()
         }
     }
 }

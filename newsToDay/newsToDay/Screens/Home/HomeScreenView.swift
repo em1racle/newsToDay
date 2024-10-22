@@ -29,14 +29,19 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 32) {
                     Text("Discover things of this world")
                         .foregroundStyle(.secondary)
-                        .padding(.bottom, 32)
                     
                     SearchView(searchText: $searchText)
                     
                     CategoriesView(selectedCategory: $selectedCategory)
+                    
+                    NewsView(news: [
+                        NewsMock(imageName: "TestImageOfNews", title: "A jittery Harris campaign makes big plans to clinch a narrow win", category: .sports),
+                        NewsMock(imageName: "TestImageOfNews", title: "Title 2", category: .politics),
+                        NewsMock(imageName: "TestImageOfNews", title: "Title 3", category: .art)
+                    ])
                 }
                 .navigationTitle("Browse")
                 .padding([.horizontal, .bottom])
