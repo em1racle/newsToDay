@@ -26,7 +26,16 @@ struct OnboardingView: View {
                         .animation(.spring(), value: currentIndex)
                 }
             }
-        }
+            
+        } .gesture(
+            DragGesture()
+                .onChanged { value in
+                    offset = value.translation
+                }
+                .onEnded { value in
+                    handleDragEnd(value: value)
+                }
+        )
     }
     
     // Вычисление смещения для каждого квадрата
@@ -44,6 +53,18 @@ struct OnboardingView: View {
         return 1.0 - min(percentage, 0.5) * 0.5
     }
     
+    // Обработка окончания листания
+    func handleDragEnd(value: DragGesture.Value) {
+        let dragThreshold: CGFloat = 50
+        
+        if value.translation.width > dragThreshold && currentIndex > 0 {
+            currentIndex -= 1
+        } else if value.translation.width < -dragThreshold && currentIndex < squares.count - 1 {
+            currentIndex += 1
+        }
+        // Вернуть offset в 0 после окончания анимации
+        offset = .zero
+    }
     
 }
 
