@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Categories: String, CaseIterable {
+enum Category: String, CaseIterable {
     case sports = "Sports"
     case politics = "Politics"
     case life = "Life"
@@ -24,7 +24,7 @@ enum Categories: String, CaseIterable {
 
 struct HomeScreenView: View {
     @State private var searchText = ""
-    @State private var selectedCategory: Categories = .sports
+    @State private var selectedCategory: Category = .sports
     
     var body: some View {
         NavigationView {
