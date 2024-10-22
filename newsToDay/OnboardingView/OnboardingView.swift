@@ -34,7 +34,30 @@ struct OnboardingView: View {
                 }
         )
         
+        // Полупрозрачные точки внизу
+        HStack(spacing: 10) {
+            ForEach(0..<vm.squares.count, id: \.self) { index in
+                Rectangle()
+                    .fill(index == vm.currentIndex ? .blue : .gray.opacity(0.2))
+                    .frame(width: index == vm.currentIndex ? 30 : 12, height: 12)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .scaleEffect(index == vm.currentIndex ? 1.2 : 1.0)
+                    .animation(.spring(), value: vm.currentIndex)
+            }
+        }
+        .padding(.top, 20)
+        
+        // Текст, который листается синхронно с квадратами
+        Text(vm.titles[vm.currentIndex])
+            .font(.title)
+            .animation(.spring(), value: vm.currentIndex)
+            .padding(.top, 40)
+        
+        Text(vm.descriptionTitles[vm.currentIndex])
+            .animation(.spring(), value: vm.currentIndex)
+            .padding(35)
     }
+    
 }
 
 #Preview {

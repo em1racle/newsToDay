@@ -14,6 +14,12 @@ final class OnboardingViewModel: ObservableObject {
     
     let screenWidth = UIScreen.main.bounds.width
     let squares: [Color] = [.red, .green, .blue]
+    let titles: [String] = ["First to Know", "Second to Know", "Third to Know"]
+    let descriptionTitles: [String] = [
+        "All news in one place, be the first to know last news",
+        "Stay Informed: Be the First to Catch the Latest News",
+        "Get All the Updates in One Spot: Stay Ahead with Breaking News"
+    ]
     
     // Вычисление смещения для каждого квадрата
     func getOffsetForSquare(at index: Int) -> CGFloat {
