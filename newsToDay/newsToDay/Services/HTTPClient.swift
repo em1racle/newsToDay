@@ -65,7 +65,7 @@ extension HTTPClient {
         
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request) { (data, response, error) -> Void in
-            if let error = error {
+            if error != nil {
                 completion(.failure(.badDataTask))
                 return
             }

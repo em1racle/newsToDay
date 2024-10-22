@@ -15,7 +15,7 @@ final class APIClient: HTTPClient {
     var method: HTTPMethod = .GET
     
     var headers: [String: String]? {
-        return ["Authorization": "Bearer \(apiKey.rawValue)"]
+        return ["X-Api-Key": apiKey.rawValue]
     }
     
     var data: Data? = nil
