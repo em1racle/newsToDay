@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Categories: String, CaseIterable {
+enum Category: String, CaseIterable {
     case sports = "Sports"
     case politics = "Politics"
     case life = "Life"
@@ -24,19 +24,24 @@ enum Categories: String, CaseIterable {
 
 struct HomeScreenView: View {
     @State private var searchText = ""
-    @State private var selectedCategory: Categories = .sports
+    @State private var selectedCategory: Category = .sports
     
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 32) {
                     Text("Discover things of this world")
                         .foregroundStyle(.secondary)
-                        .padding(.bottom, 32)
                     
                     SearchView(searchText: $searchText)
                     
                     CategoriesView(selectedCategory: $selectedCategory)
+                    
+                    NewsView(news: [
+                        NewsMock(imageName: "TestImageOfNews", title: "A jittery Harris campaign makes big plans to clinch a narrow win", category: .sports),
+                        NewsMock(imageName: "TestImageOfNews", title: "Title 2", category: .politics),
+                        NewsMock(imageName: "TestImageOfNews", title: "Title 3", category: .art)
+                    ])
                 }
                 .navigationTitle("Browse")
                 .padding([.horizontal, .bottom])
