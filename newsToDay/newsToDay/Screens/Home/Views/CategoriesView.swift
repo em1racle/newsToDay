@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+enum Category: String, CaseIterable {
+    case sports = "Sports"
+    case business = "Business"
+    case entertainment = "Entertainment"
+    case general = "General"
+    case health = "Health"
+    case science = "Science"
+    case technology = "Technology"
+}
+
 struct CategoriesView: View {
     @Binding var selectedCategory: Category
     

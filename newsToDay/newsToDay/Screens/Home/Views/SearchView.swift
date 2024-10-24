@@ -19,9 +19,9 @@ struct SearchView: View {
                 .foregroundStyle(.primary)
                 .padding(8)
         }
-        .padding()
+        .padding(8)
         .background(Color(.systemGray6))
-        .clipShape(.rect(cornerRadius: 10))
+        .clipShape(.rect(cornerRadius: 12))
         .frame(height: 56)
     }
 }
