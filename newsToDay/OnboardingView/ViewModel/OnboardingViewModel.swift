@@ -9,23 +9,40 @@ import SwiftUI
 
 final class OnboardingViewModel: ObservableObject {
     
+//    @Published var showStartScreen = true
     @Published var currentIndex: Int = 0
     @Published var offset: CGSize = .zero
     
     let images: [String] = ["TestImageOfNews", "TestImageOfNews", "TestImageOfNews"]
     let screenWidth = UIScreen.main.bounds.width
     let squares: [Color] = [.red, .green, .blue]
-    let titles: [String] = ["First to Know", "Second to Know", "Third to Know"]
+    let titles: [String] = ["First to Know", "Breaking News", "Be the First to Discover"]
     let descriptionTitles: [String] = [
         "All news in one place, be the first to know last news",
         "Stay Informed: Be the First to Catch the Latest News",
-        "Get All the Updates in One Spot: Stay Ahead with Breaking News"
+        "Get All the Updates and stay Ahead with Breaking News"
     ]
     
+//    init() {
+//        hideStartScreen()
+//    }
+    
+    
+    // delay start screen
+//    func hideStartScreen() {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                withAnimation {
+//                    self.showStartScreen = false
+//                }
+//            }
+//        }
+  
     // Checking for last
     var isLastPage: Bool {
         currentIndex == squares.count - 1
     }
+    
+    
     
     // transition func for next screen
     func goToNextPage() {

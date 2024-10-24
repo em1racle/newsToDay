@@ -15,12 +15,12 @@ struct BlueButtonView: View {
     var body: some View {
         Button(action: action) {
             Text(buttonTitle)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 24)
-                .background(.blue)
+                .background(.purplePrimary)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }

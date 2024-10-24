@@ -7,8 +7,16 @@
 
 import Foundation
 
-enum ApiKey: String {
-    case key = "9800c79adda242c4aa71af835aafb580"
+struct ApiKey {
+    static let keys: [String] = [
+        "9800c79adda242c4aa71af835aafb580",
+        "edddd91bfd344d1bae3c38265e198e90",
+        "f842a7e45b674525a3af1867f97f48b1"
+    ]
+    
+    static func randomKey() -> String {
+        return keys.randomElement() ?? ""
+    }
 }
 
 enum HTTPMethod: String {
@@ -26,21 +34,21 @@ enum HTTPClientError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .badURL:
-            "URL не валидный."
+            return "Invalid URL."
         case .badDataTask:
-            "Запрос завершился с ошибкой."
+            return "Request failed."
         case .badParametrSerialization:
-            "Переданы неверные параметры."
+            return "Invalid parameters."
         case .badDecode:
-            "Невозможно декодировать данные."
+            return "Unable to decode data."
         case .deadApiKey:
-            "Смените API ключ."
+            return "Change your API key."
         }
     }
 }
 
 protocol HTTPClient {
-    var apiKey: ApiKey { get }
+    var apiKey: String { get }
     var baseURL: String { get }
     var path: String { get }
     var endpoint: String { get }

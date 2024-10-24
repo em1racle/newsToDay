@@ -8,21 +8,21 @@
 import Foundation
 
 final class APIClient: HTTPClient {
-    var apiKey: ApiKey = .key
+    var apiKey: String = ApiKey.randomKey()
     var baseURL: String = "https://newsapi.org/v2"
     var path: String = ""
     var endpoint: String = ""
     var method: HTTPMethod = .GET
     
     var headers: [String: String]? {
-        return ["X-Api-Key": apiKey.rawValue]
+        return ["X-Api-Key": apiKey]
     }
     
     var data: Data? = nil
     
     func fetchTopHeadlines(category: String, completion: @escaping(Result<[Article], HTTPClientError>) -> Void) {
         path = "/top-headlines"
-        endpoint = "?category=\(category)&apiKey=\(apiKey.rawValue)"
+        endpoint = "?category=\(category)&apiKey=\(apiKey)"
         request(type: NewsResponse.self) { result in
             switch result {
             case .success(let response):
@@ -35,7 +35,7 @@ final class APIClient: HTTPClient {
     
     func searchNews(query: String, completion: @escaping(Result<[Article], HTTPClientError>) -> Void) {
         path = "/everything"
-        endpoint = "?q=\(query)&apiKey=\(apiKey.rawValue)"
+        endpoint = "?q=\(query)&apiKey=\(apiKey)"
         request(type: NewsResponse.self) { result in
             switch result {
             case .success(let response):

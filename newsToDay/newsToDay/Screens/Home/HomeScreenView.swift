@@ -7,45 +7,42 @@
 
 import SwiftUI
 
-enum Category: String, CaseIterable {
-    case sports = "Sports"
-    case politics = "Politics"
-    case life = "Life"
-    case gaming = "Gaming"
-    case animals = "Animals"
-    case nature = "Nature"
-    case food = "Food"
-    case art = "Art"
-    case history = "History"
-    case fashion = "Fashion"
-    case covid19 = "Covid-19"
-    case middleEast = "Middle East"
-}
-
 struct HomeScreenView: View {
+    @StateObject private var viewModel = HomeScreenViewModel()
+    
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
+    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                VStack(alignment: .leading, spacing: 32) {
+                VStack(alignment: .leading, spacing: 16) {
                     Text("Discover things of this world")
                         .foregroundStyle(.secondary)
                     
                     SearchView(searchText: $searchText)
+                        .onChange(of: searchText) { _, newValue in
+                            viewModel.searchNews(query: searchText)
+                        }
                     
                     CategoriesView(selectedCategory: $selectedCategory)
+                        .onChange(of: selectedCategory) { _, _ in
+                            viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
+                        }
                     
-                    NewsView(news: [
-                        NewsMock(imageName: "TestImageOfNews", title: "A jittery Harris campaign makes big plans to clinch a narrow win", category: .sports),
-                        NewsMock(imageName: "TestImageOfNews", title: "Title 2", category: .politics),
-                        NewsMock(imageName: "TestImageOfNews", title: "Title 3", category: .art)
-                    ])
+                    NewsView(articles: viewModel.articles)
                 }
                 .navigationTitle("Browse")
                 .padding([.horizontal, .bottom])
+                .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
+                .onReceive(viewModel.errorMessagePublisher) { errorMessage in
+                    showAlert = errorMessage != nil
+                }
             }
+        }
+        .onAppear {
+            viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
     }
 }
