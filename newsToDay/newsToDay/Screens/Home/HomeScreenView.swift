@@ -31,9 +31,12 @@ struct HomeScreenView: View {
                         .foregroundStyle(.secondary)
                     
                     SearchView(searchText: $searchText)
+                        .onChange(of: searchText) { _, newValue in
+                            viewModel.searchNews(query: searchText)
+                        }
                     
                     CategoriesView(selectedCategory: $selectedCategory)
-                        .onChange(of: selectedCategory) { oldValue, newValue in
+                        .onChange(of: selectedCategory) { _, _ in
                             viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
                         }
                     
