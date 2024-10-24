@@ -9,30 +9,50 @@ import SwiftUI
 
 struct NewsDescriptionView: View {
     var body: some View {
+        NavigationStack{
         ScrollView {
             VStack {
                 ZStack {
-                    Image(.testImageOfNews)
-                        .resizable()
-                        .frame(height: 384)
-                        .frame(maxWidth: .infinity)
-                    
-                    Text("fdsfsd")
+                        Image(.testImageOfNews)
+                            .resizable()
+                            .frame(height: 384)
+                            .frame(maxWidth: .infinity)
+                        
+                        Text("fdsfsd")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.white)
+                    }
+                    Text("Result")
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundStyle(.white)
+                    
+                    Text("fdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasaf")
+                        .font(.title) // redo
                 }
-                Text("Result")
-                    .fontWeight(.bold)
+            .toolbar() {
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink(destination: OnboardingView()) {
+                        Image("user1")
+                            .foregroundStyle(.white)
+                    }
+                }
                 
-                Text("fdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasaf")
-                    .font(.title) // redo
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: OnboardingView()) {
+                        Image("user1")
+                            .foregroundStyle(.white)
+                    }
+                }
+                
+                
             }
+            }
+            .ignoresSafeArea()
+  
         }
-        .ignoresSafeArea()
     }
 }
-
 #Preview {
     NewsDescriptionView()
 }
