@@ -9,7 +9,27 @@ import SwiftUI
 
 struct NewsDescriptionView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack {
+                ZStack {
+                    Image(.testImageOfNews)
+                        .resizable()
+                        .frame(height: 384)
+                        .frame(maxWidth: .infinity)
+                    
+                    Text("fdsfsd")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                }
+                Text("Result")
+                    .fontWeight(.bold)
+                
+                Text("fdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasafasdfsafdsaffdfsdfsdfsafsafasaf")
+                    .font(.title) // redo
+            }
+        }
+        .ignoresSafeArea()
     }
 }
 
