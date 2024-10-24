@@ -22,7 +22,7 @@ struct NewsView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .aspectRatio(1.0, contentMode: .fit)
+                                        .aspectRatio(1.0, contentMode: .fill)
                                         .clipShape(.rect(cornerRadius: 12))
                                 }
                             } else {

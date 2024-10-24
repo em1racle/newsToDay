@@ -23,6 +23,8 @@ enum Category: String, CaseIterable {
 }
 
 struct HomeScreenView: View {
+    @StateObject private var viewModel = HomeScreenViewModel()
+    
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
     
@@ -37,15 +39,14 @@ struct HomeScreenView: View {
                     
                     CategoriesView(selectedCategory: $selectedCategory)
                     
-                    NewsView(news: [
-                        NewsMock(imageName: "TestImageOfNews", title: "A jittery Harris campaign makes big plans to clinch a narrow win", category: .sports),
-                        NewsMock(imageName: "TestImageOfNews", title: "Title 2", category: .politics),
-                        NewsMock(imageName: "TestImageOfNews", title: "Title 3", category: .art)
-                    ])
+                    NewsView(articles: viewModel.articles)
                 }
                 .navigationTitle("Browse")
                 .padding([.horizontal, .bottom])
             }
+        }
+        .onAppear {
+            viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
     }
 }
