@@ -14,4 +14,19 @@ final class HomeScreenViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private var apiClient = APIClient()
+    
+    func fetchTopHeadlines(for category: String) {
+        apiClient.fetchTopHeadlines(category: category) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let articles):
+                    self?.articles = articles
+                    self?.errorMessage = nil
+                case .failure(let error):
+                    self?.articles = []
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
 }
