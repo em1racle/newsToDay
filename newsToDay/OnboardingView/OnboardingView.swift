@@ -14,44 +14,50 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             ImageView(
-                        images: vm.images,
-                        currentIndex: vm.currentIndex,
-                        offset: vm.offset,
-                        getOffsetForSquare: vm.getOffsetForSquare,
-                        getScaleAmount: vm.getScaleAmount
-                    )
-        } .gesture(
-            DragGesture()
-                .onChanged { value in
-                    vm.offset = value.translation
-                }
-                .onEnded { value in
-                    vm.handleDragEnd(value: value)
-                }
-        )
-        // Dots
-        DotsView(total: vm.squares.count, currentIndex: vm.currentIndex)
-        .padding(.top, 20)
-        
-        // Text
-        Text(vm.titles[vm.currentIndex])
-            .font(.title)
-            .animation(.spring(), value: vm.currentIndex)
-            .padding(.top, 40)
-        
-        Text(vm.descriptionTitles[vm.currentIndex])
-            .animation(.spring(), value: vm.currentIndex)
-            .padding(35)
-        
-        //ActionButton
-        BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
-                    if vm.isLastPage {
-                        // transition action
-                    } else {
-                        vm.goToNextPage()
+                images: vm.images,
+                currentIndex: vm.currentIndex,
+                offset: vm.offset,
+                getOffsetForSquare: vm.getOffsetForSquare,
+                getScaleAmount: vm.getScaleAmount
+            )
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        vm.offset = value.translation
                     }
+                    .onEnded { value in
+                        vm.handleDragEnd(value: value)
+                    }
+            )
+            .padding(.top, 60)
+            // Dots
+            DotsView(total: vm.squares.count, currentIndex: vm.currentIndex)
+                .padding(.top, 40)
+            
+            // Text
+            Text(vm.titles[vm.currentIndex])
+                .font(.system(size: 24))
+                .fontWeight(.semibold)
+                .padding(.top, 34)
+            
+            Text(vm.descriptionTitles[vm.currentIndex])
+                .font(.system(size: 16))
+                .multilineTextAlignment(.center)
+                .padding(.top, 10)
+                .padding(.horizontal, 80)
+            
+            Spacer()
+            //ActionButton
+            BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
+                if vm.isLastPage {
+                    // transition action
+                } else {
+                    vm.goToNextPage()
                 }
-                .padding(.horizontal, 40)
+            }
+            .padding(.bottom, 50)
+            .padding(.horizontal, 20)
+        }
     }
 }
 
