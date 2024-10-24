@@ -26,15 +26,15 @@ enum HTTPClientError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .badURL:
-            "URL не валидный."
+            return "Invalid URL."
         case .badDataTask:
-            "Запрос завершился с ошибкой."
+            return "Request failed."
         case .badParametrSerialization:
-            "Переданы неверные параметры."
+            return "Invalid parameters."
         case .badDecode:
-            "Невозможно декодировать данные."
+            return "Unable to decode data."
         case .deadApiKey:
-            "Смените API ключ."
+            return "Change your API key."
         }
     }
 }

@@ -15,16 +15,15 @@ struct CustomAlert: ViewModifier {
         ZStack {
             content
             if isPresented {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
-
                 VStack(spacing: 20) {
+                    Image(.error)
+                        .resizable()
+                        .scaledToFit()
+                    
                     Text(message)
-                        .font(.headline)
+                        .font(.title2)
+                        .bold()
                         .padding()
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .shadow(radius: 20)
 
                     Button("OK") {
                         isPresented = false
@@ -32,6 +31,10 @@ struct CustomAlert: ViewModifier {
                     .padding()
                 }
                 .padding()
+                .background(.white)
+                .clipShape(.rect(cornerRadius: 20))
+                .shadow(color: .black.opacity(0.4), radius: 10)
+                .frame(width: UIScreen.main.bounds.width * 0.9)
             }
         }
     }
