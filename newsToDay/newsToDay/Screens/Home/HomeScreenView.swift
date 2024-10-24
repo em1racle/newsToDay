@@ -9,17 +9,12 @@ import SwiftUI
 
 enum Category: String, CaseIterable {
     case sports = "Sports"
-    case politics = "Politics"
-    case life = "Life"
-    case gaming = "Gaming"
-    case animals = "Animals"
-    case nature = "Nature"
-    case food = "Food"
-    case art = "Art"
-    case history = "History"
-    case fashion = "Fashion"
-    case covid19 = "Covid-19"
-    case middleEast = "Middle East"
+    case business = "Business"
+    case entertainment = "Entertainment"
+    case general = "General"
+    case health = "health"
+    case science = "Science"
+    case technology = "Technology"
 }
 
 struct HomeScreenView: View {
@@ -38,6 +33,9 @@ struct HomeScreenView: View {
                     SearchView(searchText: $searchText)
                     
                     CategoriesView(selectedCategory: $selectedCategory)
+                        .onChange(of: selectedCategory) { oldValue, newValue in
+                            viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
+                        }
                     
                     NewsView(articles: viewModel.articles)
                 }
