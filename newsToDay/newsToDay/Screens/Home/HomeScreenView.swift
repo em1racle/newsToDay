@@ -12,6 +12,7 @@ struct HomeScreenView: View {
     
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
+    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
@@ -34,6 +35,10 @@ struct HomeScreenView: View {
                 }
                 .navigationTitle("Browse")
                 .padding([.horizontal, .bottom])
+                .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
+                .onReceive(viewModel.errorMessagePublisher) { errorMessage in
+                    showAlert = errorMessage != nil
+                }
             }
         }
         .onAppear {

@@ -22,7 +22,8 @@ final class APIClient: HTTPClient {
     
     func fetchTopHeadlines(category: String, completion: @escaping(Result<[Article], HTTPClientError>) -> Void) {
         path = "/top-headlines"
-        endpoint = "?category=\(category)&apiKey=\(apiKey.rawValue)"
+//        endpoint = "?category=\(category)&apiKey=\(apiKey.rawValue)"
+        endpoint = "?catory=\(category)&apiKey=\(apiKey.rawValue)"
         request(type: NewsResponse.self) { result in
             switch result {
             case .success(let response):

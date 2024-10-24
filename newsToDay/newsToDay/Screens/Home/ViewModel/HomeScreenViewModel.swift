@@ -6,12 +6,18 @@
 //
 
 import Foundation
+import Combine
 
 final class HomeScreenViewModel: ObservableObject {
     @Published var articles: [Article] = []
     @Published var errorMessage: String?
     
+    private var cancellables = Set<AnyCancellable>()
     private var apiClient = APIClient()
+    
+    var errorMessagePublisher: AnyPublisher<String?, Never> {
+            $errorMessage.eraseToAnyPublisher()
+        }
     
     func fetchTopHeadlines(for category: String) {
         apiClient.fetchTopHeadlines(category: category) { [weak self] result in
