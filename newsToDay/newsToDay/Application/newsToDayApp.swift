@@ -11,7 +11,7 @@ import SwiftUI
 struct newsToDayApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeScreenView()
+            ContentView()
         }
     }
 }
