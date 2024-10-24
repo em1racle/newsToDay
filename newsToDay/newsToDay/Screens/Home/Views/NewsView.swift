@@ -65,6 +65,7 @@ struct NewsView: View {
                     }
                 }
             }
+            .padding()
         }
         .frame(height: UIScreen.main.bounds.width * 0.75)
     }

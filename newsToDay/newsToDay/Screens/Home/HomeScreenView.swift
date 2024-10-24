@@ -26,7 +26,7 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
-                VStack(alignment: .leading, spacing: 32) {
+                VStack(alignment: .leading, spacing: 16) {
                     Text("Discover things of this world")
                         .foregroundStyle(.secondary)
                     
