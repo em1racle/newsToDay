@@ -21,10 +21,9 @@ struct NewsDescriptionView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(height: 384)
-                                 
-                                 
                             } placeholder: {
-                                Color.gray
+                                Image(.testImageOfNews)
+                                    .resizable()
                             }
                             .frame(height: 384)
                             .cornerRadius(10)
@@ -32,41 +31,70 @@ struct NewsDescriptionView: View {
                             Image(.imageNotFound)
                                 .resizable()
                                 .frame(height: 384)
+                                .frame(maxHeight: .infinity)
                                 .cornerRadius(10)
                         }
                         
-                        Text("fdsfsd")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.white)
+                        VStack(alignment: .leading) {
+//                            Text("category")
+//                                .foregroundStyle(.white)
+                            RoundedRectangle(cornerRadius: 15)
+                                .frame(width: 75, height: 32)
+                                .foregroundStyle(.blackLight)
+                            
+                            Text(article.title)
+                                .frame(width: 336, alignment: .leading)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .padding(.top)
+                                
+                            
+                            Text(article.author ?? "")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.white)
+                                .padding(.top)
+                            
+                            Text("Author")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundStyle(.gray)
+                                
+                               
+                                
+                        }
                     }
-                    Spacer()
-                    Text(article.title)
+                    Text("Result")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundStyle(.black)
-                        .frame(width: 300)
+                        .frame(width: 336)
                         .cornerRadius(10)
-                        .padding()
+                        .padding(.top)
+                       
                     
                     Text(article.description ?? "No description available.")
                         .font(.body)
-                        .frame(width: 300)
+                        .frame(width: 336)
+                        .padding(.top)
                 }
-                
                
                 .toolbar() {
                     ToolbarItem(placement: .topBarLeading) {
                         NavigationLink(destination: OnboardingView()) {
                             Image("user1")
+                                .renderingMode(.template)
                                 .foregroundStyle(.white)
                         }
                     }
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink(destination: OnboardingView()) {
-                            Image("user1")
+                            Image(.bookmark1)
+                                .renderingMode(.template)
                                 .foregroundStyle(.white)
+                                
                         }
                     }
                 }
