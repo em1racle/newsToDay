@@ -7,52 +7,20 @@
 
 import SwiftUI
 
+// Text(LocalizedStringKey("Bookmarks"))
+// Text(LocalizedStringKey("Saved articles to the library"))
+//Text(LocalizedStringKey("You haven't saved any articles yet. Start reading and bookmarking them now."))
+
 struct BookmarksView: View {
     var body: some View {
         NavigationView {
-            VStack(spacing:24) {
-                VStack(spacing:8) {
-                    HStack {
-                        Text(LocalizedStringKey("Bookmarks"))
-                            .font(.system(size: 24)
-                                .weight(.semibold)
-                            )
-                        
-                        Spacer()
-                    }
-                    HStack {
-                        Text(LocalizedStringKey("Saved articles to the library"))
-                            .font(.system(size: 16))
-                            .foregroundColor(.greyPrimary)
-                        
-                        Spacer()
-                    }
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text(LocalizedStringKey("Saved articles to the library"))
+                        .foregroundStyle(.secondary)
                 }
-                
-                Spacer()
-                
-                Button {
-               
-                } label: {
-                    ZStack {
-                        Circle()
-                            .fill(.greyLighter)
-                            .frame(width: 72, height: 72)
-                        Image("book")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-                }
-                
-                Text(LocalizedStringKey("You haven't saved any articles yet. Start reading and bookmarking them now."))
-                    .font(.system(size: 16))
-                    .multilineTextAlignment(.center)
-                    .frame(width: 256, alignment: .bottom)
-                
-                Spacer()
+                .navigationTitle(LocalizedStringKey("Bookmarks"))
             }
-            .padding()
-            
         }
     }
 }
