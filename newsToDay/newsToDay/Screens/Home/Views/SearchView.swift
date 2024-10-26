@@ -15,13 +15,14 @@ struct SearchView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(.gray)
             
-            TextField("Search", text: $searchText)
+            TextField(LocalizedStringKey("Search"), text: $searchText)
                 .foregroundStyle(.primary)
                 .padding(8)
         }
-        .padding()
+        .padding(8)
         .background(Color(.systemGray6))
-        .clipShape(.rect(cornerRadius: 10))
+        .clipShape(.rect(cornerRadius: 12))
+        .frame(height: 56)
     }
 }
 

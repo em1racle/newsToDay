@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct newsToDayApp: App {
+    
+    @State private var appRouter = AppRouter()
+    @State private var languageManager = LanguageManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                OnboardingView()
+            }
+            .environment(appRouter) // Роутинг по экранам приложения
+            .environment(languageManager) // Управление языком приложения
+            .environment(\.locale, .init(identifier: languageManager.currentLanguage))
+            .dynamicTypeSize(.large)
         }
     }
 }

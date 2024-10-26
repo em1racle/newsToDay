@@ -7,44 +7,59 @@
 
 import SwiftUI
 
-enum Categories: String, CaseIterable {
-    case sports = "Sports"
-    case politics = "Politics"
-    case life = "Life"
-    case gaming = "Gaming"
-    case animals = "Animals"
-    case nature = "Nature"
-    case food = "Food"
-    case art = "Art"
-    case history = "History"
-    case fashion = "Fashion"
-    case covid19 = "Covid-19"
-    case middleEast = "Middle East"
-}
-
 struct HomeScreenView: View {
+    @Environment(AppRouter.self) private var appRouter
+    @StateObject private var viewModel = HomeScreenViewModel()
+    
+//    @State private var selectedTab: Tab = .home
     @State private var searchText = ""
-    @State private var selectedCategory: Categories = .sports
+    @State private var selectedCategory: Category = .sports
+    @State private var showAlert = false
     
     var body: some View {
         NavigationView {
-            ScrollView(.vertical) {
-                VStack(alignment: .leading) {
-                    Text("Discover things of this world")
-                        .foregroundStyle(.secondary)
-                        .padding(.bottom, 32)
-                    
-                    SearchView(searchText: $searchText)
-                    
-                    CategoriesView(selectedCategory: $selectedCategory)
+            VStack {
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text(LocalizedStringKey("Discover things of this world"))
+                            .foregroundStyle(.secondary)
+                        
+                        SearchView(searchText: $searchText)
+                            .onChange(of: searchText) { _, newValue in
+                                viewModel.searchNews(query: searchText)
+                            }
+                        
+                        CategoriesView(selectedCategory: $selectedCategory)
+                            .onChange(of: selectedCategory) { _, _ in
+                                viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
+                            }
+                        
+                        NewsView(articles: viewModel.articles)
+                    }
+                    .navigationTitle(LocalizedStringKey("Browse"))
+                    .padding([.horizontal, .bottom])
+                    .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
+                    .onReceive(viewModel.errorMessagePublisher) { errorMessage in
+                        showAlert = errorMessage != nil
+                    }
                 }
-                .navigationTitle("Browse")
-                .padding([.horizontal, .bottom])
+                VStack {
+                    //Spacer()
+                                        
+                    CustomTabBarView()
+                        .ignoresSafeArea(edges: .bottom)
+                }
+                .ignoresSafeArea()
             }
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
     }
 }
 
 #Preview {
     HomeScreenView()
+        .environment(AppRouter())
 }
