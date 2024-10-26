@@ -17,7 +17,7 @@ struct BookmarksView: View {
     var body: some View {
         NavigationView {
             Group {
-                if articles.isEmpty {
+                if !articles.isEmpty {
                     ZStack {
                         EmptyBookmarksListView()
                     }
