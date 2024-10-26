@@ -10,8 +10,8 @@ import SwiftUI
 struct OnboardingView: View {
     
     @ObservedObject var vm = OnboardingViewModel()
-    @State private var isActive = false
-    
+    @State private var isActive = false // состояние для перехода
+
     var body: some View {
         NavigationView {
             VStack {
@@ -32,6 +32,7 @@ struct OnboardingView: View {
                         }
                 )
                 .padding(.top, 60)
+                
                 // Dots
                 DotsView(total: vm.squares.count, currentIndex: vm.currentIndex)
                     .padding(.top, 40)
@@ -49,13 +50,8 @@ struct OnboardingView: View {
                     .padding(.horizontal, 80)
                 
                 Spacer()
-                //ActionButton
-                //            NavigationLink(destination: HomeScreenView()) {
-                //                MainButton(buttonText: vm.isLastPage ? "Get Started" : "Next", buttonFontSize: 16, buttonFontWeight: .semibold, buttonColor: .purplePrimary, buttonCornerRadius: 12, buttonHeight: 56) {
-                //
-                //                }
                 
-                // NEED TO CHANGE DEPRECATED METHOD !!!!!!
+                // Action Button
                 NavigationLink(destination: HomeScreenView(), isActive: $isActive) {
                     BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
                         if vm.isLastPage {
@@ -72,7 +68,8 @@ struct OnboardingView: View {
         }
     }
 }
+    #Preview {
+        OnboardingView()
+            .environment(AppRouter())
+    }
 
-#Preview {
-    OnboardingView()
-}

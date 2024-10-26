@@ -12,6 +12,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		87DD5DD62CC5A5FB006CF691 /* newsToDay */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = newsToDay; sourceTree = "<group>"; };
+		DC33E3912CC728CD008D7CC6 /* OnboardingView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingView; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +30,7 @@
 			isa = PBXGroup;
 			children = (
 				87DD5DD62CC5A5FB006CF691 /* newsToDay */,
+				DC33E3912CC728CD008D7CC6 /* OnboardingView */,
 				87DD5DD52CC5A5FB006CF691 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +60,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				87DD5DD62CC5A5FB006CF691 /* newsToDay */,
+				DC33E3912CC728CD008D7CC6 /* OnboardingView */,
 			);
 			name = newsToDay;
 			packageProductDependencies = (
