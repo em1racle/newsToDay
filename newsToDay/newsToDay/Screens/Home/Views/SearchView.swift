@@ -15,7 +15,7 @@ struct SearchView: View {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(.gray)
             
-            TextField("Search", text: $searchText)
+            TextField(LocalizedStringKey("Search"), text: $searchText)
                 .foregroundStyle(.primary)
                 .padding(8)
         }

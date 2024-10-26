@@ -13,7 +13,7 @@ struct BookmarksView: View {
             VStack(spacing:24) {
                 VStack(spacing:8) {
                     HStack {
-                        Text("Bookmarks")
+                        Text(LocalizedStringKey("Bookmarks"))
                             .font(.system(size: 24)
                                 .weight(.semibold)
                             )
@@ -21,7 +21,7 @@ struct BookmarksView: View {
                         Spacer()
                     }
                     HStack {
-                        Text("Saved articles to the library")
+                        Text(LocalizedStringKey("Saved articles to the library"))
                             .font(.system(size: 16))
                             .foregroundColor(.greyPrimary)
                         
@@ -44,7 +44,7 @@ struct BookmarksView: View {
                     }
                 }
                 
-                Text("You haven't saved any articles yet.Start reading and bookmarking them now")
+                Text(LocalizedStringKey("You haven't saved any articles yet. Start reading and bookmarking them now."))
                     .font(.system(size: 16))
                     .multilineTextAlignment(.center)
                     .frame(width: 256, alignment: .bottom)

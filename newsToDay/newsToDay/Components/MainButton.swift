@@ -16,7 +16,8 @@ struct MainButton: View {
     var buttonCornerRadius: CGFloat = 12
     var showIconImage: Bool = false
     var iconImageName: String = "chevron.right"
-    var buttonHeight: CGFloat = 70
+    var buttonHeight: CGFloat = 64
+    var isSelected: Bool = false
     
     var action: (() -> Void)?
     
@@ -27,39 +28,44 @@ struct MainButton: View {
             HStack(alignment: .center, spacing: 10) {
                 Text(buttonText)
                     .font(.system(size: buttonFontSize, weight: buttonFontWeight, design: .default))
-                    .foregroundStyle(.greyDark)
+                    .foregroundColor(isSelected ? .white : .greyDark)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 if showIconImage {
                     Image(systemName: iconImageName)
-                        .foregroundColor(.greyDark)
+                        .foregroundColor(isSelected ? .white : .greyDark)
                         .frame(width: 24)
                         .imageScale(.large)
+                }
+                
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.white)
+                        .font(.title3.weight(.medium))
                 }
             }
             .padding()
             .frame(maxWidth: .infinity)
             .background {
-                    RoundedRectangle(cornerRadius: buttonCornerRadius, style: .continuous)
-                        .fill(buttonColor)
-                        .frame(height: buttonHeight)
-                }
+                RoundedRectangle(cornerRadius: buttonCornerRadius, style: .continuous)
+                    .fill(isSelected ? Color.purplePrimary : buttonColor)
+                    .frame(height: buttonHeight)
             }
         }
+    }
 }
 
 #Preview("LightEN") {
     VStack(spacing: 0) {
-        MainButton()
+        MainButton(isSelected: true)
             .padding()
             .environment(\.locale, .init(identifier: "EN"))
             .preferredColorScheme(.light)
         
-        MainButton(buttonText: "Button", buttonColor: .greyLighter, showIconImage: true)
+        MainButton(buttonText: "Button", buttonColor: .greyLighter, showIconImage: true, isSelected: false)
             .padding()
             .environment(\.locale, .init(identifier: "EN"))
             .preferredColorScheme(.light)
     }
 }
-
