@@ -8,51 +8,55 @@
 import SwiftUI
 
 struct NewsDescriptionView: View {
-    let article: Article
+    @ObservedObject private var vm: NewsDescriptionViewModel
+    
+    // Инициализатор в самом View
+    init(article: Article) {
+        self.vm = NewsDescriptionViewModel(article: article)
+    }
     
     var body: some View {
         NavigationView{
             ScrollView {
                 VStack {
                     ZStack {
-                        if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
+                        if let url = vm.imageUrl {
                             AsyncImage(url: url) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
                                     .frame(height: 384)
                             } placeholder: {
-                                Image(.testImageOfNews)
-                                    .resizable()
+                                Color.gray
+                                   
                             }
                             .frame(height: 384)
-                            .cornerRadius(10)
+                            
                         } else {
                             Image(.imageNotFound)
                                 .resizable()
                                 .frame(height: 384)
-                                .frame(maxHeight: .infinity)
                                 .cornerRadius(10)
                         }
-                        
                         VStack(alignment: .leading) {
                             Spacer()
-                            Text("category")
+                            Text("category?")
                                 .foregroundStyle(.white)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 8)
                                 .background(.purplePrimary)
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                             
-                            Text(article.title)
+                            Text(vm.article.title)
                                 .frame(width: 336, alignment: .leading)
                                 .font(.system(size: 26, weight: .bold))
-//                                .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
                                 .padding(.top)
-                                
-                            Text(article.author ?? "")
+                                .lineLimit(3)
+                                .minimumScaleFactor(0.5)
+                            
+                            Text(vm.article.author ?? "")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
@@ -73,14 +77,14 @@ struct NewsDescriptionView: View {
                         .frame(width: 336)
                         .cornerRadius(10)
                         .padding(.top)
-                       
                     
-                    Text(article.description ?? "No description available.")
+                    
+                    Text(vm.article.description ?? "No description available.")
                         .font(.body)
                         .frame(width: 336)
                         .padding(.top)
                 }
-               
+                
                 .toolbar() {
                     ToolbarItem(placement: .topBarLeading) {
                         NavigationLink(destination: OnboardingView()) {
@@ -95,7 +99,6 @@ struct NewsDescriptionView: View {
                             Image(.bookmark1)
                                 .renderingMode(.template)
                                 .foregroundStyle(.white)
-                                
                         }
                     }
                 }
