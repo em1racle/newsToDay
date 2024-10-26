@@ -16,7 +16,7 @@ struct NewsDescriptionView: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             ScrollView {
                 VStack {
                     ZStack {
@@ -28,7 +28,7 @@ struct NewsDescriptionView: View {
                                     .frame(height: 384)
                             } placeholder: {
                                 Color.gray
-                                   
+                                
                             }
                             .frame(height: 384)
                             
@@ -86,16 +86,16 @@ struct NewsDescriptionView: View {
                 }
                 
                 .toolbar() {
-                    ToolbarItem(placement: .topBarLeading) {
-                        NavigationLink(destination: OnboardingView()) {
-                            Image("user1")
-                                .renderingMode(.template)
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {} )
+//                        {
+//                            Image(systemName: "arrow.left")
+//                                .foregroundStyle(.white)
+//                        }
+//                    }
+//                    
                     ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink(destination: OnboardingView()) {
+                        NavigationLink(destination: BookmarksView()) {
                             Image(.bookmark1)
                                 .renderingMode(.template)
                                 .foregroundStyle(.white)
@@ -103,6 +103,7 @@ struct NewsDescriptionView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
             .ignoresSafeArea()
         }
     }
