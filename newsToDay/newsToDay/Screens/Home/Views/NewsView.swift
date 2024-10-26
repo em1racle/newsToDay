@@ -61,17 +61,33 @@ struct NewsImageView: View {
     
     var body: some View {
         if let urlToImage = urlToImage, let url = URL(string: urlToImage) {
-            AsyncImage(url: url) { image in
-                image
-                    .image?.resizable()
-                    .scaledToFill()
-                    .frame(width: cardSize, height: cardSize)
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    placeholderImage
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: cardSize, height: cardSize)
+                        .clipShape(.rect(cornerRadius: 12))
+                case .failure(_):
+                    placeholderImage
+                @unknown default:
+                    placeholderImage
+                }
             }
         } else {
-            Image(.imageNotFound)
-                .resizable()
-                .aspectRatio(1.0, contentMode: .fit)
+            placeholderImage
         }
+    }
+    
+    private var placeholderImage: some View {
+        Image(.imageNotFound)
+            .resizable()
+            .scaledToFill()
+            .frame(width: cardSize, height: cardSize)
+            .clipped()
     }
 }
 
