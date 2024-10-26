@@ -16,19 +16,25 @@ struct BookmarksView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading) {
-                    Text(LocalizedStringKey("Saved articles to the library"))
-                        .foregroundStyle(.secondary)
-                    
-                    if !articles.isEmpty {
+            Group {
+                if articles.isEmpty {
+                    ZStack {
                         EmptyBookmarksListView()
-                    } else {
-                        
+                    }
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            Text(LocalizedStringKey("Saved articles to the library"))
+                                .foregroundStyle(.secondary)
+                            
+                        // Show bookmarks' list
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-                .navigationTitle(LocalizedStringKey("Bookmarks"))
             }
+            .navigationTitle(LocalizedStringKey("Bookmarks"))
         }
     }
 }
