@@ -12,12 +12,13 @@ import SwiftUI
 //Text(LocalizedStringKey("You haven't saved any articles yet. Start reading and bookmarking them now."))
 
 struct BookmarksView: View {
+    @StateObject private var viewModel = HomeScreenViewModel()
     var articles: [Article]
     
     var body: some View {
         NavigationView {
             Group {
-                if !articles.isEmpty {
+                if articles.isEmpty {
                     ZStack {
                         EmptyBookmarksListView()
                     }
@@ -27,7 +28,13 @@ struct BookmarksView: View {
                             Text(LocalizedStringKey("Saved articles to the library"))
                                 .foregroundStyle(.secondary)
                             
-                        // Show bookmarks' list
+                            ForEach(viewModel.articles) { article in
+                                NavigationLink {
+                                    NewsDescriptionView(article: article)
+                                } label: {
+                                    HorizontalNewsView(article: article)
+                                }
+                            }
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -35,6 +42,9 @@ struct BookmarksView: View {
                 }
             }
             .navigationTitle(LocalizedStringKey("Bookmarks"))
+        }
+        .onAppear {
+            viewModel.fetchTopHeadlines(for: Category.business.rawValue)
         }
     }
 }
