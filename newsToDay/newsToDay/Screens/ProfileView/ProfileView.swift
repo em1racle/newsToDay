@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @Environment(AppRouter.self) private var appRouter
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     
     var body: some View {
@@ -32,24 +33,38 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    MainButton(buttonText: "Language", showIconImage: true)
+                    MainButton(buttonText: "Language", showIconImage: true) {
+                        appRouter.appRoute.append(.language)
+                    }
                         .padding(19)
                         .padding(.bottom, 180)
                     
                     
                     VStack(alignment: .center, spacing: 28) {
-                        MainButton(buttonText: "Terms & Conditions", showIconImage: true)
-                        MainButton(buttonText: "Sign Out", showIconImage: true, iconImageName: "iphone.and.arrow.forward.inward")
+                        MainButton(buttonText: LocalizedStringKey("Terms & Conditions"), showIconImage: true) {
+                            appRouter.appRoute.append(.terms)
+                        }
+                        MainButton(buttonText: LocalizedStringKey("Sign Out"), showIconImage: true, iconImageName: "iphone.and.arrow.forward.inward")
                     }
                     .padding(19)
-                    .padding(.bottom, 124)
+                    .padding(.bottom, 24)
+                    
+                    VStack {
+                        Spacer()
+                                            
+                        CustomTabBarView()
+                            .ignoresSafeArea(edges: .bottom)
+                    }
+                    .ignoresSafeArea()
                 }
             }
-            .navigationBarTitle(Text("Profile"))
+            .navigationBarTitle(Text(LocalizedStringKey("Profile")))
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
     ProfileView()
+        .environment(AppRouter())
 }

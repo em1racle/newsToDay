@@ -16,8 +16,8 @@ final class OnboardingViewModel: ObservableObject {
     let images: [String] = ["TestImageOfNews", "TestImageOfNews", "TestImageOfNews"]
     let screenWidth = UIScreen.main.bounds.width
     let squares: [Color] = [.red, .green, .blue]
-    let titles: [String] = ["First to Know", "Breaking News", "Be the First to Discover"]
-    let descriptionTitles: [String] = [
+    let titles: [LocalizedStringKey] = [LocalizedStringKey("First to Know"), LocalizedStringKey("Breaking News"), LocalizedStringKey("Be the First to Discover")]
+    let descriptionTitles: [LocalizedStringKey] = [
         "All news in one place, be the first to know last news",
         "Stay Informed: Be the First to Catch the Latest News",
         "Get All the Updates and stay Ahead with Breaking News"
