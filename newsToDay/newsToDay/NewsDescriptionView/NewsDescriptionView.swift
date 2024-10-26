@@ -8,49 +8,55 @@
 import SwiftUI
 
 struct NewsDescriptionView: View {
-    let article: Article
+    @ObservedObject private var vm: NewsDescriptionViewModel
+    
+    // Инициализатор в самом View
+    init(article: Article) {
+        self.vm = NewsDescriptionViewModel(article: article)
+    }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             ScrollView {
                 VStack {
                     ZStack {
-                        if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
+                        if let url = vm.imageUrl {
                             AsyncImage(url: url) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
                                     .frame(height: 384)
                             } placeholder: {
-                                Image(.testImageOfNews)
-                                    .resizable()
+                                Color.gray
+                                
                             }
                             .frame(height: 384)
-                            .cornerRadius(10)
+                            
                         } else {
                             Image(.imageNotFound)
                                 .resizable()
                                 .frame(height: 384)
-                                .frame(maxHeight: .infinity)
                                 .cornerRadius(10)
                         }
-                        
                         VStack(alignment: .leading) {
-//                            Text("category")
-//                                .foregroundStyle(.white)
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(width: 75, height: 32)
-                                .foregroundStyle(.blackLight)
+                            Spacer()
+                            Text("category?")
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(.purplePrimary)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                             
-                            Text(article.title)
+                            Text(vm.article.title)
                                 .frame(width: 336, alignment: .leading)
-                                .font(.headline)
+                                .font(.system(size: 26, weight: .bold))
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
                                 .padding(.top)
-                                
+                                .lineLimit(3)
+                                .minimumScaleFactor(0.5)
                             
-                            Text(article.author ?? "")
+                            Text(vm.article.author ?? "")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
@@ -60,11 +66,10 @@ struct NewsDescriptionView: View {
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.gray)
-                                
-                               
-                                
+                                .padding(.bottom, 40)
                         }
                     }
+                    
                     Text("Result")
                         .font(.title)
                         .fontWeight(.bold)
@@ -72,33 +77,33 @@ struct NewsDescriptionView: View {
                         .frame(width: 336)
                         .cornerRadius(10)
                         .padding(.top)
-                       
                     
-                    Text(article.description ?? "No description available.")
+                    
+                    Text(vm.article.description ?? "No description available.")
                         .font(.body)
                         .frame(width: 336)
                         .padding(.top)
                 }
-               
+                
                 .toolbar() {
-                    ToolbarItem(placement: .topBarLeading) {
-                        NavigationLink(destination: OnboardingView()) {
-                            Image("user1")
-                                .renderingMode(.template)
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink(destination: OnboardingView()) {
-                            Image(.bookmark1)
-                                .renderingMode(.template)
-                                .foregroundStyle(.white)
-                                
-                        }
-                    }
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {} )
+//                        {
+//                            Image(systemName: "arrow.left")
+//                                .foregroundStyle(.white)
+//                        }
+//                    }
+//                    
+//                    ToolbarItem(placement: .topBarTrailing) {
+//                        NavigationLink(destination: BookmarksView(articles: <#[Article]#>)) {
+//                            Image(.bookmark1)
+//                                .renderingMode(.template)
+//                                .foregroundStyle(.white)
+//                        }
+//                    }
                 }
             }
+            .navigationBarBackButtonHidden(true)
             .ignoresSafeArea()
         }
     }
@@ -107,7 +112,7 @@ struct NewsDescriptionView: View {
     NewsDescriptionView(article: Article(
         source: Source(id: nil, name: "Sample News Source"),
         author: "John Doe",
-        title: "Sample Title Sample Title Sample Title Sample Title",
+        title: "The latest situation in the presidential election",
         description: "Sample Title Sample Title Sample Title Sample Title.",
         url: "https://example.com",
         urlToImage: "sample-image.jpg",

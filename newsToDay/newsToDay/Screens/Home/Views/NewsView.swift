@@ -14,7 +14,7 @@ struct NewsView: View {
         ScrollView(.horizontal) {
             HStack(spacing: 16) {
                 ForEach(articles) { article in
-                    NavigationLink(destination: Text("Detail of news")) {
+                    NavigationLink(destination: NewsDescriptionView(article: article)) {
                         NewsArticleCardView(
                             article: article,
                             cardSize: UIScreen.main.bounds.width * 0.75

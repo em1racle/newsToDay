@@ -9,14 +9,11 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @Environment(AppRouter.self) private var appRouter
     @ObservedObject var vm = OnboardingViewModel()
-    
+    @State private var isActive = false // состояние для перехода
+
     var body: some View {
-        
-        @Bindable var appRouter = appRouter
-        
-        NavigationStack(path: $appRouter.appRoute) {
+        NavigationView {
             VStack {
                 ImageView(
                     images: vm.images,
@@ -35,6 +32,7 @@ struct OnboardingView: View {
                         }
                 )
                 .padding(.top, 60)
+                
                 // Dots
                 DotsView(total: vm.squares.count, currentIndex: vm.currentIndex)
                     .padding(.top, 40)
@@ -52,41 +50,26 @@ struct OnboardingView: View {
                     .padding(.horizontal, 80)
                 
                 Spacer()
-                //ActionButton
-                BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
-                    if vm.isLastPage {
-                        // transition action
-                        appRouter.appRoute.append(.home)
-                    } else {
-                        vm.goToNextPage()
+                
+                // Action Button
+                NavigationLink(destination: HomeScreenView(), isActive: $isActive) {
+                    BlueButtonView(buttonTitle: vm.isLastPage ? "Get Started" : "Next") {
+                        if vm.isLastPage {
+                            isActive = true
+                        } else {
+                            vm.goToNextPage()
+                        }
                     }
                 }
                 .padding(.bottom, 50)
                 .padding(.horizontal, 20)
-                .navigationDestination(for: MainViewPath.self) { place in
-                    switch place {
-                    case .home:
-                        HomeScreenView()
-                    case .onboarding:
-                        OnboardingView()
-                    case .bookmark:
-                        // TODO: Create the correct view
-                        Text("Something")
-//                        BookmarksView()
-                    case .profile:
-                        ProfileView()
-                    case .language:
-                        LanguageView()
-                    case .terms:
-                        TermsView()
-                    }
-                }
             }
+            .navigationBarHidden(true)
         }
     }
 }
+    #Preview {
+        OnboardingView()
+            .environment(AppRouter())
+    }
 
-#Preview {
-    OnboardingView()
-        .environment(AppRouter())
-}
