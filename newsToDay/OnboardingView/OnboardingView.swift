@@ -70,7 +70,9 @@ struct OnboardingView: View {
                     case .onboarding:
                         OnboardingView()
                     case .bookmark:
-                        BookmarksView()
+                        // TODO: Create the correct view
+                        Text("Something")
+//                        BookmarksView()
                     case .profile:
                         ProfileView()
                     case .language:
