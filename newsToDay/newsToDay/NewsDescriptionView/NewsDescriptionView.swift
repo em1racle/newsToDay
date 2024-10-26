@@ -36,20 +36,22 @@ struct NewsDescriptionView: View {
                         }
                         
                         VStack(alignment: .leading) {
-//                            Text("category")
-//                                .foregroundStyle(.white)
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(width: 75, height: 32)
-                                .foregroundStyle(.blackLight)
+                            Spacer()
+                            Text("category")
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(.purplePrimary)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                             
                             Text(article.title)
                                 .frame(width: 336, alignment: .leading)
-                                .font(.headline)
+                                .font(.system(size: 26, weight: .bold))
+//                                .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
                                 .padding(.top)
                                 
-                            
                             Text(article.author ?? "")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
@@ -60,11 +62,10 @@ struct NewsDescriptionView: View {
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.gray)
-                                
-                               
-                                
+                                .padding(.bottom, 40)
                         }
                     }
+                    
                     Text("Result")
                         .font(.title)
                         .fontWeight(.bold)
@@ -107,7 +108,7 @@ struct NewsDescriptionView: View {
     NewsDescriptionView(article: Article(
         source: Source(id: nil, name: "Sample News Source"),
         author: "John Doe",
-        title: "Sample Title Sample Title Sample Title Sample Title",
+        title: "The latest situation in the presidential election",
         description: "Sample Title Sample Title Sample Title Sample Title.",
         url: "https://example.com",
         urlToImage: "sample-image.jpg",
