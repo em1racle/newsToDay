@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeScreenView: View {
     @StateObject private var viewModel = HomeScreenViewModel()
+    @StateObject private var bookmarkManager = BookmarksManager()
 
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
@@ -47,6 +48,7 @@ struct HomeScreenView: View {
         .onAppear {
             viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
+        .environmentObject(bookmarkManager)
     }
 }
 
