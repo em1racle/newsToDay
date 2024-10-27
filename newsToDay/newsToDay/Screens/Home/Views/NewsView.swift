@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewsView: View {
     let articles: [Article]
+    let cardSize = UIScreen.main.bounds.width * 0.65
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -17,14 +18,14 @@ struct NewsView: View {
                     NavigationLink(destination: NewsDescriptionView(article: article)) {
                         NewsArticleCardView(
                             article: article,
-                            cardSize: UIScreen.main.bounds.width * 0.75
+                            cardSize: cardSize
                         )
                     }
                 }
             }
             .padding()
         }
-        .frame(height: UIScreen.main.bounds.width * 0.75)
+        .frame(height: cardSize)
     }
 }
 
@@ -50,7 +51,6 @@ struct NewsArticleCardView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(width: cardSize, height: cardSize)
-        .clipShape(.rect(cornerRadius: 12))
     }
 }
 
@@ -87,7 +87,7 @@ struct NewsImageView: View {
             .resizable()
             .scaledToFill()
             .frame(width: cardSize, height: cardSize)
-            .clipped()
+            .clipShape(.rect(cornerRadius: 12))
     }
 }
 

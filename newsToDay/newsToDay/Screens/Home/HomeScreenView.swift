@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct HomeScreenView: View {
-    @Environment(AppRouter.self) private var appRouter
     @StateObject private var viewModel = HomeScreenViewModel()
-    
-//    @State private var selectedTab: Tab = .home
+
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
     @State private var showAlert = false
@@ -43,13 +41,6 @@ struct HomeScreenView: View {
                         showAlert = errorMessage != nil
                     }
                 }
-                VStack {
-                    //Spacer()
-                                        
-                    CustomTabBarView()
-                        .ignoresSafeArea(edges: .bottom)
-                }
-                .ignoresSafeArea()
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -61,5 +52,4 @@ struct HomeScreenView: View {
 
 #Preview {
     HomeScreenView()
-        .environment(AppRouter())
 }
