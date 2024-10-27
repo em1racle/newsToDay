@@ -13,7 +13,7 @@ struct NewsResponse: Codable {
     let articles: [Article]
 }
 
-struct Article: Codable, Identifiable {
+struct Article: Codable, Identifiable, Hashable {
     let id = UUID()
     let source: Source
     let author: String?
@@ -29,7 +29,7 @@ struct Article: Codable, Identifiable {
     }
 }
 
-struct Source: Codable {
+struct Source: Codable, Hashable {
     let id: String?
     let name: String
 }
