@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUICore
 
 enum Category: String, CaseIterable {
     case sports = "Sports"
@@ -15,4 +16,8 @@ enum Category: String, CaseIterable {
     case health = "Health"
     case science = "Science"
     case technology = "Technology"
+    
+    var localizedKey: LocalizedStringKey {
+        LocalizedStringKey(rawValue.capitalized)
+    }
 }

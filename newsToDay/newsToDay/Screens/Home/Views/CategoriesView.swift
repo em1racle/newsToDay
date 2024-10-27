@@ -15,7 +15,7 @@ struct CategoriesView: View {
             HStack {
                 ForEach(Category.allCases, id: \.self) { category in
                     CategoryButton(
-                        category: selectedCategory,
+                        category: category,
                         isSelected: selectedCategory == category) {
                             selectedCategory = category
                         }
@@ -34,7 +34,7 @@ struct CategoryButton: View {
     
     var body: some View {
         Button(action: action) {
-            Text(category.rawValue)
+            Text(category.localizedKey)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
                 .foregroundColor(isSelected ? .white : .gray)
