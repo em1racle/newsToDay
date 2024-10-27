@@ -10,7 +10,7 @@ import Foundation
 final class BookmarksManager: ObservableObject {
     @Published var bookmarkedArticles: Set<Article> = []
     
-    func toogleBookmark(for article: Article) {
+    func toggleBookmark(for article: Article) {
         if bookmarkedArticles.contains(article) {
             bookmarkedArticles.remove(article)
         } else {

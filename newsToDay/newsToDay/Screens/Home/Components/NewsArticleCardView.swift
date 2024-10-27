@@ -12,6 +12,8 @@ struct NewsArticleCardView: View {
     let article: Article
     let cardSize: CGFloat
     
+    @EnvironmentObject var bookmarkManager: BookmarksManager
+    
     var body: some View {
         ZStack {
             NewsImageView(urlToImage: article.urlToImage, cardSize: cardSize)
@@ -71,16 +73,22 @@ struct NewsImageView: View {
 
 //MARK: - NewsArticleContentView
 struct NewsArticleContentView: View {
+    @EnvironmentObject var bookmarkManager: BookmarksManager
+    
     let article: Article
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Spacer()
-                Image(systemName: "bookmark")
-                    .font(.system(size: 24))
-                    .bold()
-                    .foregroundStyle(.white)
+                
+                Button(action: {
+                    bookmarkManager.toggleBookmark(for: article)
+                }) {
+                    Image(systemName: bookmarkManager.isBookmarked(for: article) ? "bookmark.fill" : "bookmark")
+                        .font(.system(size: 24))
+                        .foregroundStyle(.white)
+                }
             }
             
             Spacer()
