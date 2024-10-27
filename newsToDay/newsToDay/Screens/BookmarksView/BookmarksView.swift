@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct BookmarksView: View {
-    @StateObject private var viewModel = HomeScreenViewModel()
-    
-    // TODO: Set articles from bookmarks
-    var articles: [Article]
+    @EnvironmentObject private var bookmarksManager: BookmarksManager
     
     var body: some View {
         NavigationView {
             Group {
-                if articles.isEmpty {
+                if bookmarksManager.bookmarkedArticles.isEmpty {
                     EmptyBookmarksListView()
                 } else {
                     ScrollView {
@@ -24,7 +21,7 @@ struct BookmarksView: View {
                             Text(LocalizedStringKey("Saved articles to the library"))
                                 .foregroundStyle(.secondary)
                             
-                            HorizontalNewsView(articles: articles)
+                            HorizontalNewsView(articles: Array(bookmarksManager.bookmarkedArticles))
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -32,9 +29,6 @@ struct BookmarksView: View {
                 }
             }
             .navigationTitle(LocalizedStringKey("Bookmarks"))
-        }
-        .onAppear {
-            viewModel.fetchTopHeadlines(for: Category.business.rawValue)
         }
     }
 }
