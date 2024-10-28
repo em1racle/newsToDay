@@ -11,6 +11,7 @@ struct HomeScreenView: View {
     @StateObject private var viewModel = HomeScreenViewModel()
     @StateObject private var bookmarkManager = BookmarksManager()
 
+    @State private var selectedTab: Tab = .home
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
     @State private var showAlert = false
@@ -18,30 +19,48 @@ struct HomeScreenView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView(.vertical) {
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text(LocalizedStringKey("Discover things of this world"))
-                            .foregroundStyle(.secondary)
-                        
-                        SearchView(searchText: $searchText)
-                            .onChange(of: searchText) { _, newValue in
-                                viewModel.searchNews(query: searchText)
+                switch selectedTab {
+                    case .home:
+                        ScrollView(.vertical) {
+                            VStack(alignment: .leading, spacing: 16) {
+                                Text(LocalizedStringKey("Discover things of this world"))
+                                    .foregroundStyle(.secondary)
+                                
+                                SearchView(searchText: $searchText)
+                                    .onChange(of: searchText) { _, newValue in
+                                        viewModel.searchNews(query: searchText)
+                                    }
+                                
+                                CategoriesView(selectedCategory: $selectedCategory)
+                                    .onChange(of: selectedCategory) { _, _ in
+                                        viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
+                                    }
+                                
+                                NewsView(articles: viewModel.articles)
                             }
-                        
-                        CategoriesView(selectedCategory: $selectedCategory)
-                            .onChange(of: selectedCategory) { _, _ in
-                                viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
-                            }
-                        
-                        NewsView(articles: viewModel.articles)
-                    }
-                    .navigationTitle(LocalizedStringKey("Browse"))
-                    .padding([.horizontal, .bottom])
-                    .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
-                    .onReceive(viewModel.errorMessagePublisher) { errorMessage in
-                        showAlert = errorMessage != nil
-                    }
+                            .padding([.horizontal, .bottom])
+                        }
+                        .navigationTitle(LocalizedStringKey("Browse"))
+                    
+                    case .categories:
+                        LanguageView()
+                            .navigationTitle(LocalizedStringKey("Categories"))
+                    
+                    case .bookmark:
+                        BookmarksView()
+                            .navigationTitle(LocalizedStringKey("Bookmarks"))
+                    
+                    case .profile:
+                        ProfileView()
+                            .navigationTitle(LocalizedStringKey("Profile"))
                 }
+                
+                CustomTabBarView(selectedTab: $selectedTab)
+            }
+            .ignoresSafeArea(edges: .bottom)
+            .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
+            .onReceive(viewModel.errorMessagePublisher) { errorMessage in
+                showAlert = errorMessage != nil
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -54,4 +73,5 @@ struct HomeScreenView: View {
 
 #Preview {
     HomeScreenView()
+        .environment(AppRouter())
 }

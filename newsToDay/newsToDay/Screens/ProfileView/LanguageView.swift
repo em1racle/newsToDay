@@ -40,7 +40,7 @@ struct LanguageView: View {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "arrow.backward")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.greyDark)
                             .font(.title3.weight(.medium))
                         
                     }

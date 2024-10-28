@@ -10,6 +10,8 @@ import SwiftUI
 struct BookmarksView: View {
     @EnvironmentObject private var bookmarksManager: BookmarksManager
     
+    @State private var selectedTab: Tab = .bookmark
+    
     var body: some View {
         NavigationView {
             Group {
@@ -28,7 +30,7 @@ struct BookmarksView: View {
                     }
                 }
             }
-            .navigationTitle(LocalizedStringKey("Bookmarks"))
+            //.navigationTitle(LocalizedStringKey("Bookmarks"))
         }
     }
 }

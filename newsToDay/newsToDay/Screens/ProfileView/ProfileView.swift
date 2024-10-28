@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @Environment(AppRouter.self) private var appRouter
+    @State private var selectedTab: Tab = .profile
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     
     var body: some View {
@@ -33,32 +34,32 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    MainButton(buttonText: "Language", showIconImage: true) {
-                        appRouter.appRoute.append(.language)
+                    NavigationLink(destination: LanguageView()) {
+                        MainButton(buttonText: LocalizedStringKey("Language"), showIconImage: true)
+                            .padding(19)
+                            .padding(.bottom, 180)
                     }
-                        .padding(19)
-                        .padding(.bottom, 180)
                     
                     
                     VStack(alignment: .center, spacing: 28) {
-                        MainButton(buttonText: LocalizedStringKey("Terms & Conditions"), showIconImage: true) {
-                            appRouter.appRoute.append(.terms)
+                        NavigationLink(destination: TermsView()) {
+                                        MainButton(buttonText: LocalizedStringKey("Terms & Conditions"), showIconImage: true)
                         }
                         MainButton(buttonText: LocalizedStringKey("Sign Out"), showIconImage: true, iconImageName: "iphone.and.arrow.forward.inward")
                     }
                     .padding(19)
                     .padding(.bottom, 24)
                     
-                    VStack {
-                        Spacer()
-                                            
-                        CustomTabBarView()
-                            .ignoresSafeArea(edges: .bottom)
-                    }
-                    .ignoresSafeArea()
+//                    VStack {
+//                        Spacer()
+//                                            
+//                        CustomTabBarView()
+//                            .ignoresSafeArea(edges: .bottom)
+//                    }
+//                    .ignoresSafeArea()
                 }
             }
-            .navigationBarTitle(Text(LocalizedStringKey("Profile")))
+            //.navigationBarTitle(Text(LocalizedStringKey("Profile")))
         }
         .navigationBarBackButtonHidden(true)
     }

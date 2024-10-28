@@ -9,13 +9,14 @@ import SwiftUI
 
 struct TabBarButton: View {
     
-    @Environment(AppRouter.self) private var appRouter
-    var iconName: String
-    var action: () -> Void
+    @Binding var selectedTab: Tab
+    let tab: Tab
+    let iconName: String
+
     
     var body: some View {
         Button(action: {
-                    action()
+                    selectedTab = tab
                 }) {
             Image(iconName)
                 .resizable()
