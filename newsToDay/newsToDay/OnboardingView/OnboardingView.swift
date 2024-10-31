@@ -70,6 +70,5 @@ struct OnboardingView: View {
 }
     #Preview {
         OnboardingView()
-            .environment(AppRouter())
     }
 

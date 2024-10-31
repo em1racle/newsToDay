@@ -13,24 +13,35 @@ struct BookmarksView: View {
     @State private var selectedTab: Tab = .bookmark
     
     var body: some View {
-        NavigationView {
-            Group {
-                if bookmarksManager.bookmarkedArticles.isEmpty {
-                    EmptyBookmarksListView()
-                } else {
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            Text(LocalizedStringKey("Saved articles to the library"))
-                                .foregroundStyle(.secondary)
-                            
-                            HorizontalNewsView(articles: Array(bookmarksManager.bookmarkedArticles))
+        VStack(alignment: .leading) {
+            
+            Text("Bookmarks")
+                    .font(.system(size: 24, weight: .bold))
+                    .padding(.top, 20)
+                    .padding(.leading, 20)
+            
+            NavigationView {
+                Group {
+                    if bookmarksManager.bookmarkedArticles.isEmpty {
+                        EmptyBookmarksListView()
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading) {
+                                Text(LocalizedStringKey("Saved articles to the library"))
+                                    .foregroundStyle(.secondary)
+                                
+                                HorizontalNewsView(articles: Array(bookmarksManager.bookmarkedArticles))
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
-            //.navigationTitle(LocalizedStringKey("Bookmarks"))
         }
     }
+}
+#Preview {
+    BookmarksView()
+        .environmentObject(BookmarksManager())
 }

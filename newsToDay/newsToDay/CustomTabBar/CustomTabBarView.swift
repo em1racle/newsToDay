@@ -12,7 +12,6 @@ struct CustomTabBarView: View {
     @Binding var selectedTab: Tab
 
     
-    @Environment(AppRouter.self) private var appRouter
     
     var body: some View {
     
@@ -31,13 +30,12 @@ struct CustomTabBarView: View {
                 TabBarButton(selectedTab: $selectedTab, tab: .bookmark, iconName: "bookmark1")
                 TabBarButton(selectedTab: $selectedTab, tab: .profile, iconName: "user1")
             }
-            .frame(alignment: .center)
+            .padding(.bottom)
         }
         .frame(height: 96)
     }
 }
 
 //#Preview {
-//    CustomTabBarView()
-//        .environment(AppRouter())
+//    CustomTabBarView(selectedTab: $selectedTab)
 //}

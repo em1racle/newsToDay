@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LanguageView: View {
     
-    @Environment(AppRouter.self) private var appRouter
     @Environment(\.presentationMode) var presentationMode
     @Environment(LanguageManager.self) var languageManager
 
@@ -59,7 +58,6 @@ struct LanguageView: View {
 
 #Preview {
     LanguageView()
-        .environment(AppRouter())
         .environment(LanguageManager())
 }
 

@@ -18,44 +18,32 @@ struct HomeScreenView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                switch selectedTab {
-                    case .home:
-                        ScrollView(.vertical) {
-                            VStack(alignment: .leading, spacing: 16) {
-                                Text(LocalizedStringKey("Discover things of this world"))
-                                    .foregroundStyle(.secondary)
-                                
-                                SearchView(searchText: $searchText)
-                                    .onChange(of: searchText) { _, newValue in
-                                        viewModel.searchNews(query: searchText)
-                                    }
-                                
-                                CategoriesView(selectedCategory: $selectedCategory)
-                                    .onChange(of: selectedCategory) { _, _ in
-                                        viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
-                                    }
-                                
-                                NewsView(articles: viewModel.articles)
-                            }
-                            .padding([.horizontal, .bottom])
-                        }
-                        .navigationTitle(LocalizedStringKey("Browse"))
-                    
-                    case .categories:
-                        LanguageView()
-                            .navigationTitle(LocalizedStringKey("Categories"))
-                    
-                    case .bookmark:
-                        BookmarksView()
-                            .navigationTitle(LocalizedStringKey("Bookmarks"))
-                    
-                    case .profile:
-                        ProfileView()
-                            .navigationTitle(LocalizedStringKey("Profile"))
-                }
+            VStack(alignment: .leading) {
                 
-                CustomTabBarView(selectedTab: $selectedTab)
+                Text("Browse")
+                        .font(.system(size: 24, weight: .bold))
+                        .padding(.top, 20)
+                        .padding(.leading, 16)
+                
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text(LocalizedStringKey("Discover things of this world"))
+                            .foregroundStyle(.secondary)
+                        
+                        SearchView(searchText: $searchText)
+                            .onChange(of: searchText) { _, newValue in
+                                viewModel.searchNews(query: searchText)
+                            }
+                        
+                        CategoriesView(selectedCategory: $selectedCategory)
+                            .onChange(of: selectedCategory) { _, _ in
+                                viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
+                            }
+                        
+                        NewsView(articles: viewModel.articles)
+                    }
+                    .padding([.horizontal, .bottom])
+                }
             }
             .ignoresSafeArea(edges: .bottom)
             .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
@@ -73,5 +61,4 @@ struct HomeScreenView: View {
 
 #Preview {
     HomeScreenView()
-        .environment(AppRouter())
 }

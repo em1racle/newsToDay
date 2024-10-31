@@ -10,18 +10,54 @@ import SwiftUI
 @main
 struct newsToDayApp: App {
     
-    @State private var appRouter = AppRouter()
     @State private var languageManager = LanguageManager()
-    
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = true // Флаг для онбординга
+
     var body: some Scene {
         WindowGroup {
-            Group {
-                OnboardingView()
+            if hasSeenOnboarding {
+                ContentView() // Показываем основной контент с таб-баром после онбординга
+                    .environment(languageManager)
+                    .environment(\.locale, .init(identifier: languageManager.currentLanguage))
+                    .dynamicTypeSize(.large)
+            } //else {
+//                OnboardingView()
+//                    .onDisappear { hasSeenOnboarding = true } // Устанавливаем флаг после завершения онбординга
+//                    .environment(languageManager)
+//                    .environment(\.locale, .init(identifier: languageManager.currentLanguage))
+//            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var selectedTab: Tab = .home
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                Spacer()
+                
+                // Переключение между представлениями для каждой вкладки
+                switch selectedTab {
+                    case .home:
+                    HomeScreenView()
+                    
+                    case .categories:
+                        LanguageView()
+                    
+                    case .bookmark:
+                        BookmarksView()
+                    
+                    case .profile:
+                        ProfileView()
+                }
+                
+                Spacer()
+                
+                CustomTabBarView(selectedTab: $selectedTab)
             }
-            .environment(appRouter) // Роутинг по экранам приложения
-            .environment(languageManager) // Управление языком приложения
-            .environment(\.locale, .init(identifier: languageManager.currentLanguage))
-            .dynamicTypeSize(.large)
+            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }

@@ -2,14 +2,19 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @Environment(AppRouter.self) private var appRouter
     @State private var selectedTab: Tab = .profile
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .topLeading) {
-                VStack {
+                VStack(alignment: .leading) {
+                    
+                    Text("Profile")
+                            .font(.system(size: 24, weight: .bold))
+                            .padding(.top, 20)
+                            .padding(.leading, 20)
+                    
                     Spacer().frame(height: 20)
                     
                     HStack(alignment: .center) {
@@ -35,9 +40,10 @@ struct ProfileView: View {
                     Spacer()
                     
                     NavigationLink(destination: LanguageView()) {
-                        MainButton(buttonText: LocalizedStringKey("Language"), showIconImage: true)
-                            .padding(19)
-                            .padding(.bottom, 180)
+//                        MainButton(buttonText: LocalizedStringKey("Language"), showIconImage: true, action: nil)
+//                            .padding(19)
+//                            .padding(.bottom, 180)
+                        Text("Language")
                     }
                     
                     
@@ -67,5 +73,4 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
-        .environment(AppRouter())
 }
