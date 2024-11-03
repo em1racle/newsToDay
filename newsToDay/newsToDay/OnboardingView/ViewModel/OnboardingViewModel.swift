@@ -13,7 +13,7 @@ final class OnboardingViewModel: ObservableObject {
     @Published var currentIndex: Int = 0
     @Published var offset: CGSize = .zero
     
-    let images: [String] = ["TestImageOfNews", "TestImageOfNews", "TestImageOfNews"]
+    let images: [String] = ["TestImageOfNews", "city3", "city2"]
     let screenWidth = UIScreen.main.bounds.width
     let squares: [Color] = [.red, .green, .blue]
     let titles: [LocalizedStringKey] = [LocalizedStringKey("First to Know"), LocalizedStringKey("Breaking News"), LocalizedStringKey("Be the First to Discover")]
