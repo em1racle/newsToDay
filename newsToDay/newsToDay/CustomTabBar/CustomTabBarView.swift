@@ -9,41 +9,34 @@ import SwiftUI
 
 struct CustomTabBarView: View {
     
-    @Environment(AppRouter.self) private var appRouter
-    
+    @Binding var selectedTab: Tab
+
     var body: some View {
     
         ZStack {
-            // Серый прямоугольник
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color.white) // Установите нужный цвет и прозрачность
-                .frame(height: 110) // Задайте нужную высоту
+                .fill(Color.white)
+                .frame(height: 110)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .stroke(Color.greyLight, lineWidth: 1) // Цвет и ширина границы
+                        .stroke(Color.greyLight, lineWidth: 1)
                         )
             
-            // Ваш HStack для кнопок таб-бара
             HStack(alignment: .center, spacing: 64) {
-                TabBarButton(iconName: "estate1") {
-                    appRouter.appRoute.append(.home)
-                }
-                TabBarButton(iconName: "apps1") {
-                    appRouter.appRoute.append(.home)
-                }
-                TabBarButton(iconName: "bookmark1") {
-                    appRouter.appRoute.append(.bookmark)
-                }
-                TabBarButton(iconName: "user1") {
-                    appRouter.appRoute.append(.profile)
-                }
+                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "house")
+                
+                // TODO: Need to create this screen, don't leave it as empty.
+//                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "apps1")
+                
+                TabBarButton(selectedTab: $selectedTab, tab: .bookmark, iconName: "bookmark")
+                TabBarButton(selectedTab: $selectedTab, tab: .profile, iconName: "person")
             }
-            .frame(alignment: .center)
+            .padding(.bottom)
         }
-        .frame(height: 96) // Совпадает с высотой прямоугольника для компоновки
+        .frame(height: 96)
     }
 }
 
 //#Preview {
-//    CustomTabBarView(selectedTab: )
+//    CustomTabBarView(selectedTab: $selectedTab)
 //}

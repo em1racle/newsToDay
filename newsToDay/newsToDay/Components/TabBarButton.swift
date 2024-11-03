@@ -9,22 +9,21 @@ import SwiftUI
 
 struct TabBarButton: View {
     
-    @Environment(AppRouter.self) private var appRouter
-    var iconName: String
-    var action: () -> Void
+    @Binding var selectedTab: Tab
+    let tab: Tab
+    let iconName: String
+
     
     var body: some View {
         Button(action: {
-                    action()
-                }) {
-            Image(iconName)
+            selectedTab = tab
+        }) {
+            Image(systemName: iconName)
                 .resizable()
+                .bold()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
-                //.foregroundColor(selectedTab == tab ? .blue : .gray) // Выделение выбранной вкладки
         }
+        .foregroundStyle(selectedTab == tab ? .purplePrimary : .gray)
     }
 }
-//#Preview {
-//    TabBarButton(iconName: "estate1", tab: .home, selectedTab: $selectedTab)
-//}

@@ -9,10 +9,11 @@ import SwiftUI
 
 //MARK: - NewsArticleCardView
 struct NewsArticleCardView: View {
-    let article: Article
-    let cardSize: CGFloat
-    
     @EnvironmentObject var bookmarkManager: BookmarksManager
+    
+    let article: Article
+    let category: String
+    let cardSize: CGFloat
     
     var body: some View {
         ZStack {
@@ -26,7 +27,7 @@ struct NewsArticleCardView: View {
             .frame(width: cardSize, height: cardSize)
             .clipShape(.rect(cornerRadius: 12))
             
-            NewsArticleContentView(article: article)
+            NewsArticleContentView(article: article, category: category)
                 .padding(24)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -76,6 +77,7 @@ struct NewsArticleContentView: View {
     @EnvironmentObject var bookmarkManager: BookmarksManager
     
     let article: Article
+    let category: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -83,7 +85,7 @@ struct NewsArticleContentView: View {
                 Spacer()
                 
                 Button(action: {
-                    bookmarkManager.toggleBookmark(for: article)
+                    bookmarkManager.toggleBookmark(for: article, category: category)
                 }) {
                     Image(systemName: bookmarkManager.isBookmarked(for: article) ? "bookmark.fill" : "bookmark")
                         .font(.system(size: 24))

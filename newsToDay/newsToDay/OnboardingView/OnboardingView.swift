@@ -66,10 +66,10 @@ struct OnboardingView: View {
             }
             .navigationBarHidden(true)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
     #Preview {
         OnboardingView()
-            .environment(AppRouter())
     }
 

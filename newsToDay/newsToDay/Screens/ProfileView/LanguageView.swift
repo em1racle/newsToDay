@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LanguageView: View {
     
-    @Environment(AppRouter.self) private var appRouter
     @Environment(\.presentationMode) var presentationMode
     @Environment(LanguageManager.self) var languageManager
 
@@ -40,7 +39,7 @@ struct LanguageView: View {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "arrow.backward")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.greyDark)
                             .font(.title3.weight(.medium))
                         
                     }
@@ -59,7 +58,6 @@ struct LanguageView: View {
 
 #Preview {
     LanguageView()
-        .environment(AppRouter())
         .environment(LanguageManager())
 }
 

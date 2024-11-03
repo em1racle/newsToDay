@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct HomeScreenView: View {
+    @EnvironmentObject private var bookmarkManager: BookmarksManager
     @StateObject private var viewModel = HomeScreenViewModel()
-    @StateObject private var bookmarkManager = BookmarksManager()
 
+    @State private var selectedTab: Tab = .home
     @State private var searchText = ""
     @State private var selectedCategory: Category = .sports
     @State private var showAlert = false
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
+                
+                Text("Browse")
+                        .font(.system(size: 24, weight: .bold))
+                        .padding(.top, 20)
+                        .padding(.leading, 16)
+                
                 ScrollView(.vertical) {
                     VStack(alignment: .leading, spacing: 16) {
                         Text(LocalizedStringKey("Discover things of this world"))
@@ -33,15 +40,19 @@ struct HomeScreenView: View {
                                 viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
                             }
                         
-                        NewsView(articles: viewModel.articles)
+                        NewsView(
+                            articles: viewModel.articles,
+                            category: selectedCategory.rawValue
+                        )
+                        .environmentObject(bookmarkManager)
                     }
-                    .navigationTitle(LocalizedStringKey("Browse"))
                     .padding([.horizontal, .bottom])
-                    .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
-                    .onReceive(viewModel.errorMessagePublisher) { errorMessage in
-                        showAlert = errorMessage != nil
-                    }
                 }
+            }
+            .ignoresSafeArea(edges: .bottom)
+            .customAlert(isPresented: $showAlert, message: viewModel.errorMessage ?? "")
+            .onReceive(viewModel.errorMessagePublisher) { errorMessage in
+                showAlert = errorMessage != nil
             }
         }
         .navigationBarBackButtonHidden(true)

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TermsView: View {
 
-    @Environment(AppRouter.self) private var appRouter
     @Environment(\.presentationMode) var presentationMode
     var languageManager = LanguageManager()
     let termsEn: String = """
@@ -136,5 +135,4 @@ Welcome to NewsToDay.
 
     #Preview {
         TermsView()
-            .environment(AppRouter())
     }
