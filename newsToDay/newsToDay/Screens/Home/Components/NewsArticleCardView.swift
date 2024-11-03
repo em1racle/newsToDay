@@ -9,10 +9,10 @@ import SwiftUI
 
 //MARK: - NewsArticleCardView
 struct NewsArticleCardView: View {
+    @EnvironmentObject var bookmarkManager: BookmarksManager
+    
     let article: Article
     let cardSize: CGFloat
-    
-    @EnvironmentObject var bookmarkManager: BookmarksManager
     
     var body: some View {
         ZStack {

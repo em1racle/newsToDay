@@ -11,8 +11,6 @@ struct CustomTabBarView: View {
     
     @Binding var selectedTab: Tab
 
-    
-    
     var body: some View {
     
         ZStack {
@@ -25,10 +23,13 @@ struct CustomTabBarView: View {
                         )
             
             HStack(alignment: .center, spacing: 64) {
-                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "estate1")
-                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "apps1")
-                TabBarButton(selectedTab: $selectedTab, tab: .bookmark, iconName: "bookmark1")
-                TabBarButton(selectedTab: $selectedTab, tab: .profile, iconName: "user1")
+                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "house")
+                
+                // TODO: Need to create this screen, don't leave it as empty.
+//                TabBarButton(selectedTab: $selectedTab, tab: .home, iconName: "apps1")
+                
+                TabBarButton(selectedTab: $selectedTab, tab: .bookmark, iconName: "bookmark")
+                TabBarButton(selectedTab: $selectedTab, tab: .profile, iconName: "person")
             }
             .padding(.bottom)
         }

@@ -16,16 +16,14 @@ struct TabBarButton: View {
     
     var body: some View {
         Button(action: {
-                    selectedTab = tab
-                }) {
-            Image(iconName)
+            selectedTab = tab
+        }) {
+            Image(systemName: iconName)
                 .resizable()
+                .bold()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
-                //.foregroundColor(selectedTab == tab ? .blue : .gray) // Выделение выбранной вкладки
         }
+        .foregroundStyle(selectedTab == tab ? .purplePrimary : .gray)
     }
 }
-//#Preview {
-//    TabBarButton(iconName: "estate1", tab: .home, selectedTab: $selectedTab)
-//}

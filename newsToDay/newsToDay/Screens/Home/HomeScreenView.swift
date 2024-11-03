@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HomeScreenView: View {
+    @EnvironmentObject private var bookmarkManager: BookmarksManager
     @StateObject private var viewModel = HomeScreenViewModel()
-    @StateObject private var bookmarkManager = BookmarksManager()
 
     @State private var selectedTab: Tab = .home
     @State private var searchText = ""
@@ -41,6 +41,7 @@ struct HomeScreenView: View {
                             }
                         
                         NewsView(articles: viewModel.articles)
+                            .environmentObject(bookmarkManager)
                     }
                     .padding([.horizontal, .bottom])
                 }

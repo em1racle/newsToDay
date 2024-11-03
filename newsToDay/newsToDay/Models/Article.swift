@@ -14,6 +14,10 @@ struct NewsResponse: Codable {
 }
 
 struct Article: Codable, Identifiable, Hashable {
+    enum CodingKeys: String, CodingKey {
+        case source, author, title, description, url, urlToImage, publishedAt, content
+    }
+    
     let id = UUID()
     let source: Source
     let author: String?
@@ -24,9 +28,14 @@ struct Article: Codable, Identifiable, Hashable {
     let publishedAt: String
     let content: String?
     
-    enum CodingKeys: String, CodingKey {
-        case source, author, title, description, url, urlToImage, publishedAt, content
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(url)
     }
+    
+    static func == (lhs: Article, rhs: Article) -> Bool {
+        lhs.url == rhs.url
+    }
+    
 }
 
 struct Source: Codable, Hashable {
