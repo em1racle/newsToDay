@@ -103,3 +103,12 @@
 "Browse" = "Главная";
 "Discover things of this world" = "Открывай для себя новое";
 "Search" = "Искать";
+
+// MARK: - News' Category
+"Sports" = "Спорт";
+"Business" = "Бизнес";
+"Entertainment" = "Развлечения";
+"General" = "Общее";
+"Health" = "Здоровье";
+"Science" = "Наука";
+"Technology" = "Технологии";

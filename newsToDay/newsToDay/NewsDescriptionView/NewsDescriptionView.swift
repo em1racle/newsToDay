@@ -94,13 +94,13 @@ struct NewsDescriptionView: View {
 //                        }
 //                    }
 //                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink(destination: BookmarksView()) {
-                            Image(.bookmark1)
-                                .renderingMode(.template)
-                                .foregroundStyle(.white)
-                        }
-                    }
+//                    ToolbarItem(placement: .topBarTrailing) {
+//                        NavigationLink(destination: BookmarksView(articles: <#[Article]#>)) {
+//                            Image(.bookmark1)
+//                                .renderingMode(.template)
+//                                .foregroundStyle(.white)
+//                        }
+//                    }
                 }
             }
             .navigationBarBackButtonHidden(true)
