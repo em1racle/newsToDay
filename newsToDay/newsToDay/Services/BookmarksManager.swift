@@ -8,19 +8,19 @@
 import Foundation
 
 final class BookmarksManager: ObservableObject {
-    @Published var bookmarkedArticles: Set<Article> = []
+    @Published var bookmarkedArticles: [Article] = []
     
     init() {
-        loadBookmakrs()
+        loadBookmarks()
     }
     
-    func toggleBookmark(for article: Article) {
-        if bookmarkedArticles.contains(article) {
-            bookmarkedArticles.remove(article)
-            print(bookmarkedArticles.count)
+    func toggleBookmark(for article: Article, category: String = "") {
+        if let index = bookmarkedArticles.firstIndex(of: article) {
+            bookmarkedArticles.remove(at: index)
         } else {
-            bookmarkedArticles.insert(article)
-            print("Article added: \(article). Current bookmarks: \(bookmarkedArticles)")
+            var articleWithCategory = article
+            articleWithCategory.category = category
+            bookmarkedArticles.append(articleWithCategory)
         }
         saveBookmarks()
     }
@@ -30,12 +30,10 @@ final class BookmarksManager: ObservableObject {
     }
     
     private func saveBookmarks() {
-        let bookmarksArray = Array(bookmarkedArticles)
-        StorageManager.shared.saveBookmarks(bookmarksArray)
+        StorageManager.shared.saveBookmarks(bookmarkedArticles)
     }
     
-    private func loadBookmakrs() {
-        let bookmarksArray = StorageManager.shared.loadBookmarks()
-        bookmarkedArticles = Set(bookmarksArray)
+    private func loadBookmarks() {
+        bookmarkedArticles = StorageManager.shared.loadBookmarks()
     }
 }

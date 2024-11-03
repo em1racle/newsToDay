@@ -2,121 +2,76 @@
 //  NewsDescriptionView.swift
 //  newsToDay
 //
-//  Created by Sergey Zakurakin on 10/23/24.
+//  Created by Иван Семикин on 03/11/24.
 //
 
 import SwiftUI
 
 struct NewsDescriptionView: View {
+    @EnvironmentObject var bookmarkManager: BookmarksManager
     @ObservedObject private var vm: NewsDescriptionViewModel
     
+    @Environment(\.presentationMode) var presentationMode
+    
+    let category: String
+    
     // Инициализатор в самом View
-    init(article: Article) {
+    init(article: Article, category: String) {
         self.vm = NewsDescriptionViewModel(article: article)
+        self.category = category
     }
     
     var body: some View {
-        NavigationView {
+        ZStack {
             ScrollView {
                 VStack {
                     ZStack {
-                        if let url = vm.imageUrl {
-                            AsyncImage(url: url) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(height: 384)
-                            } placeholder: {
-                                Color.gray
-                                
-                            }
-                            .frame(height: 384)
-                            
-                        } else {
-                            Image(.imageNotFound)
-                                .resizable()
-                                .frame(height: 384)
-                                .cornerRadius(10)
-                        }
-                        VStack(alignment: .leading) {
-                            Spacer()
-                            Text("category?")
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(.purplePrimary)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                            
-                            Text(vm.article.title)
-                                .frame(width: 336, alignment: .leading)
-                                .font(.system(size: 26, weight: .bold))
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                                .padding(.top)
-                                .lineLimit(3)
-                                .minimumScaleFactor(0.5)
-                            
-                            Text(vm.article.author ?? "")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.white)
-                                .padding(.top)
-                            
-                            Text("Author")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(.gray)
-                                .padding(.bottom, 40)
-                        }
+                        ImageNewsView(imageUrl: vm.imageUrl)
+                        
+                        SourceAndTitleNewsView(article: vm.article, category: category)
                     }
                     
-                    Text("Result")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.black)
-                        .frame(width: 336)
-                        .cornerRadius(10)
-                        .padding(.top)
-                    
-                    
-                    Text(vm.article.description ?? "No description available.")
-                        .font(.body)
-                        .frame(width: 336)
-                        .padding(.top)
+                    DescriptionNewsView(article: vm.article)
                 }
-                
-                .toolbar() {
-//                    ToolbarItem(placement: .navigationBarLeading) {
-//                        Button(action: {} )
-//                        {
-//                            Image(systemName: "arrow.left")
-//                                .foregroundStyle(.white)
-//                        }
-//                    }
-//                    
-//                    ToolbarItem(placement: .topBarTrailing) {
-//                        NavigationLink(destination: BookmarksView(articles: <#[Article]#>)) {
-//                            Image(.bookmark1)
-//                                .renderingMode(.template)
-//                                .foregroundStyle(.white)
-//                        }
-//                    }
-                }
+                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
             }
-            .navigationBarBackButtonHidden(true)
-            .ignoresSafeArea()
+            
+            VStack {
+                HStack {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "arrow.left")
+                            .font(.title2)
+                            .bold()
+                            .padding(10)
+                            .background(Color.purplePrimary)
+                            .clipShape(Circle())
+                            .foregroundStyle(.white)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        bookmarkManager.toggleBookmark(for: vm.article)
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: bookmarkManager.isBookmarked(for: vm.article) ? "bookmark.fill" : "bookmark")
+                            .font(.title2)
+                            .padding(10)
+                            .background(Color.purplePrimary)
+                            .clipShape(Circle())
+                            .foregroundStyle(.white)
+                    }
+                }
+                .padding(.horizontal)
+
+                Spacer()
+            }
+            .frame(width: UIScreen.main.bounds.width)
+            .padding(.top, 60)
         }
+        .ignoresSafeArea(edges: .top)
     }
-}
-#Preview {
-    NewsDescriptionView(article: Article(
-        source: Source(id: nil, name: "Sample News Source"),
-        author: "John Doe",
-        title: "The latest situation in the presidential election",
-        description: "Sample Title Sample Title Sample Title Sample Title.",
-        url: "https://example.com",
-        urlToImage: "sample-image.jpg",
-        publishedAt: "2024",
-        content: "This is the content of the sample article."
-    ))
 }

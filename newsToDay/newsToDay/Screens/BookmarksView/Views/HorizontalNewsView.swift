@@ -13,9 +13,7 @@ struct HorizontalNewsView: View {
     var body: some View {
         ForEach(articles) { article in
             HStack(spacing: 16) {
-                NavigationLink {
-                    NewsDescriptionView(article: article)
-                } label: {
+                NavigationLink(destination: NewsDescriptionView(article: article, category: article.category ?? "")) {
                     NewsImageView(
                         urlToImage: article.urlToImage,
                         cardSize: UIScreen.main.bounds.width * 0.2

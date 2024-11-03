@@ -40,8 +40,11 @@ struct HomeScreenView: View {
                                 viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
                             }
                         
-                        NewsView(articles: viewModel.articles)
-                            .environmentObject(bookmarkManager)
+                        NewsView(
+                            articles: viewModel.articles,
+                            category: selectedCategory.rawValue
+                        )
+                        .environmentObject(bookmarkManager)
                     }
                     .padding([.horizontal, .bottom])
                 }
@@ -57,7 +60,6 @@ struct HomeScreenView: View {
             viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
         .environmentObject(bookmarkManager)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

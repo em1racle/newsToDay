@@ -2,7 +2,7 @@
 //  BookmarksView.swift
 //  newsToDay
 //
-//  Created by Никита Мартьянов on 23.10.24.
+//  Created by Иван Семикин on 26.10.24.
 //
 
 import SwiftUI
@@ -16,25 +16,23 @@ struct BookmarksView: View {
         VStack(alignment: .leading) {
             
             Text("Bookmarks")
-                    .font(.system(size: 24, weight: .bold))
-                    .padding(.top, 20)
-                    .padding(.leading, 20)
+                .font(.system(size: 24, weight: .bold))
+                .padding(.top, 20)
+                .padding(.leading, 20)
             
-            NavigationView {
-                Group {
-                    if bookmarksManager.bookmarkedArticles.isEmpty {
-                        EmptyBookmarksListView()
-                    } else {
-                        ScrollView {
-                            VStack(alignment: .leading) {
-                                Text(LocalizedStringKey("Saved articles to the library"))
-                                    .foregroundStyle(.secondary)
-                                
-                                HorizontalNewsView(articles: Array(bookmarksManager.bookmarkedArticles))
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
+            Group {
+                if bookmarksManager.bookmarkedArticles.isEmpty {
+                    EmptyBookmarksListView()
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            Text(LocalizedStringKey("Saved articles to the library"))
+                                .foregroundStyle(.secondary)
+                            
+                            HorizontalNewsView(articles: Array(bookmarksManager.bookmarkedArticles))
                         }
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
