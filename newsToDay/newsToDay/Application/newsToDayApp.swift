@@ -36,13 +36,13 @@ struct RootView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
     
     var body: some View {
-//        if !isLoggedIn {
-//            RegistrationView(viewModel: RegisterViewModel())
-//        } else if !hasSeenOnboarding {
-//            OnboardingView()
-//        } else {
+        if !isLoggedIn {
+            RegistrationView(viewModel: RegisterViewModel())
+        } else if !hasSeenOnboarding {
+            OnboardingView()
+        } else {
             ContentView()
-//        }
+        }
     }
 }
 
