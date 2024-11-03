@@ -56,6 +56,7 @@ struct HomeScreenView: View {
             viewModel.fetchTopHeadlines(for: selectedCategory.rawValue)
         }
         .environmentObject(bookmarkManager)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

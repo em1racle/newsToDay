@@ -2,6 +2,9 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    var langText: LocalizedStringKey = "Language"
+    var termsText: LocalizedStringKey = "Terms & Conditions"
+    
     @State private var selectedTab: Tab = .profile
     @State private var profileImage: Image? = Image(systemName: "person.circle.fill")
     
@@ -40,32 +43,60 @@ struct ProfileView: View {
                     Spacer()
                     
                     NavigationLink(destination: LanguageView()) {
-//                        MainButton(buttonText: LocalizedStringKey("Language"), showIconImage: true, action: nil)
-//                            .padding(19)
-//                            .padding(.bottom, 180)
-                        Text("Language")
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(.greyLighter)
+                                .frame(height: 64)
+                                .padding(19)
+                            
+                            HStack(alignment: .center, spacing: 10) {
+                                Text(langText)
+                                    .font(.system(size: 18, weight: .medium, design: .default))
+                                    .foregroundColor(.greyDark)
+                                    .lineLimit(1)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 32)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.greyDark)
+                                    .frame(width: 24)
+                                    .imageScale(.large)
+                                    .padding(.trailing, 35)
+                            }
+                        }
+                        .padding(.bottom, 60)
                     }
                     
                     
                     VStack(alignment: .center, spacing: 28) {
                         NavigationLink(destination: TermsView()) {
-                                        MainButton(buttonText: LocalizedStringKey("Terms & Conditions"), showIconImage: true)
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(.greyLighter)
+                                    .frame(height: 64)
+                                
+                                HStack(alignment: .center, spacing: 10) {
+                                    Text(termsText)
+                                        .font(.system(size: 18, weight: .medium, design: .default))
+                                        .foregroundColor(.greyDark)
+                                        .lineLimit(1)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.leading, 13)
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.greyDark)
+                                        .frame(width: 24)
+                                        .imageScale(.large)
+                                        .padding(.trailing, 16)
+                                }
+                            }
                         }
                         MainButton(buttonText: LocalizedStringKey("Sign Out"), showIconImage: true, iconImageName: "iphone.and.arrow.forward.inward")
                     }
                     .padding(19)
                     .padding(.bottom, 24)
-                    
-//                    VStack {
-//                        Spacer()
-//                                            
-//                        CustomTabBarView()
-//                            .ignoresSafeArea(edges: .bottom)
-//                    }
-//                    .ignoresSafeArea()
                 }
             }
-            //.navigationBarTitle(Text(LocalizedStringKey("Profile")))
         }
         .navigationBarBackButtonHidden(true)
     }

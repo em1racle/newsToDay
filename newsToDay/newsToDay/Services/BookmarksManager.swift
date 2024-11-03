@@ -13,8 +13,10 @@ final class BookmarksManager: ObservableObject {
     func toggleBookmark(for article: Article) {
         if bookmarkedArticles.contains(article) {
             bookmarkedArticles.remove(article)
+            print(bookmarkedArticles)
         } else {
             bookmarkedArticles.insert(article)
+            print("Article added: \(article). Current bookmarks: \(bookmarkedArticles)")
         }
     }
     

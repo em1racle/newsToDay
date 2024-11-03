@@ -6,26 +6,42 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct newsToDayApp: App {
     
     @State private var languageManager = LanguageManager()
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = true // Флаг для онбординга
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    @StateObject private var viewModel = RegisterViewModel()
+
+    init() {
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {
-            if hasSeenOnboarding {
-                ContentView() // Показываем основной контент с таб-баром после онбординга
-                    .environment(languageManager)
-                    .environment(\.locale, .init(identifier: languageManager.currentLanguage))
-                    .dynamicTypeSize(.large)
-            } //else {
-//                OnboardingView()
-//                    .onDisappear { hasSeenOnboarding = true } // Устанавливаем флаг после завершения онбординга
-//                    .environment(languageManager)
-//                    .environment(\.locale, .init(identifier: languageManager.currentLanguage))
-//            }
+            RootView()
+                .environment(languageManager)
+                .environment(\.locale, .init(identifier: languageManager.currentLanguage))
+                .environmentObject(viewModel)
+                .environmentObject(BookmarksManager())
+        }
+    }
+}
+
+struct RootView: View {
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    
+    var body: some View {
+        if !isLoggedIn {
+            RegistrationView(viewModel: RegisterViewModel())
+        } else if !hasSeenOnboarding {
+            OnboardingView()
+        } else {
+            ContentView()
         }
     }
 }
@@ -38,19 +54,18 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                // Переключение между представлениями для каждой вкладки
                 switch selectedTab {
-                    case .home:
+                case .home:
                     HomeScreenView()
                     
-                    case .categories:
-                        LanguageView()
+                case .categories:
+                    LanguageView()
                     
-                    case .bookmark:
-                        BookmarksView()
+                case .bookmark:
+                    BookmarksView()
                     
-                    case .profile:
-                        ProfileView()
+                case .profile:
+                    ProfileView()
                 }
                 
                 Spacer()
@@ -59,5 +74,6 @@ struct ContentView: View {
             }
             .edgesIgnoringSafeArea(.bottom)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
